@@ -1,10 +1,10 @@
-import "./index.css"
+
 
 export default function Index() {
 
   return (
     <div>
-      <p>Hello there!</p>
+      <p>This is the index of Quizzes</p>
     </div>
   )
 }
