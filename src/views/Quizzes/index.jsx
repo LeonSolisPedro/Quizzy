@@ -1,75 +1,83 @@
 import { Link } from "react-router-dom";
-import { useReactTable, getCoreRowModel, flexRender } from '@tanstack/react-table';
+import {
+  Table,
+  Header,
+  HeaderRow,
+  Body,
+  Row,
+  HeaderCell,
+  Cell,
+} from "@table-library/react-table-library/table";
 import { useState } from "react";
 
 
-// Sample data
-const initialData = [
-  { id: 1, name: 'John Doe', age: 28 },
-  { id: 2, name: 'Jane Smith', age: 34 },
-  { id: 3, name: 'Sam Johnson', age: 22 },
-];
+const apiResponse = {
+  nodes: [
+    {
+      id: 1,
+      name: 'Pedro León',
+      date: new Date(2020, 1, 15),
+      type: 1,
+      isComplete: true,
+    },
+    {
+      id: 2,
+      name: 'Luis Novelo',
+      date: new Date(2020, 1, 15),
+      type: 0,
+      isComplete: true,
+    },
+  ],
+};
 
 
 export default function Index() {
-  const [data, setData] = useState(initialData); // Table data state
+  const [data, setData] = useState(apiResponse);
 
-  // Define columns
-  const columns = [
-    {
-      accessorKey: 'name', // Access the "name" key in the data
-      header: 'Name',
-    },
-    {
-      accessorKey: 'age', // Access the "age" key in the data
-      header: 'Age',
-    },
-    {
-      header: "Uwu", // The custom "Uwu" column
-      cell: ({ row }) => (
-        <button onClick={() => handleDelete(row)}>Delete</button>
-      ),
-    },
-  ];
 
-  const handleDelete = (rowId) => {
-    debugger
-    console.log(rowId)
-  };
-
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  });
+  const handleRemove = (id) => {
+    setData((state) => ({
+      ...state,
+      nodes: state.nodes.filter((node) => node.id !== id),
+    }));
+  }
 
   return (
     <div>
       <p>This is the index of Quizzes</p>
-      <table>
-      <thead>
-        {table.getHeaderGroups().map(headerGroup => (
-          <tr key={headerGroup.id}>
-            {headerGroup.headers.map(header => (
-              <th key={header.id}>
-                {flexRender(header.column.columnDef.header, header.getContext())}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-        {table.getRowModel().rows.map(row => (
-          <tr key={row.id}>
-            {row.getVisibleCells().map(cell => (
-              <td key={cell.id}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+      <Table data={data}>
+        {(tableList) => (
+          <>
+            <Header>
+              <HeaderRow>
+                <HeaderCell sortKey="">Id</HeaderCell>
+                <HeaderCell sortKey="">Name</HeaderCell>
+                <HeaderCell sortKey="">Date</HeaderCell>
+                <HeaderCell sortKey="">Type</HeaderCell>
+                <HeaderCell sortKey="">Complete</HeaderCell>
+                <HeaderCell sortKey="">Actions</HeaderCell>
+              </HeaderRow>
+            </Header>
+
+            <Body>
+              {tableList.map((item) => (
+                <Row item={item} key={item.id}>
+                  <Cell>{item.id}</Cell>
+                  <Cell>{item.name}</Cell>
+                  <Cell>{item.date.toString()}</Cell>
+                  <Cell>{item.type}</Cell>
+                  <Cell>{item.isComplete.toString()}</Cell>
+                  <Cell>
+                    <button type="button" onClick={() => handleRemove(item.id)}>
+                      Remove
+                    </button>
+                  </Cell>
+                </Row>
+              ))}
+            </Body>
+          </>
+        )}
+      </Table>
       <Link to={`1`}>Go to quizz 1</Link>
     </div>
   )
