@@ -8,6 +8,12 @@ import {
   HeaderCell,
   Cell,
 } from "@table-library/react-table-library/table";
+import {
+  useSort,
+  HeaderCellSort,
+  SortIconPositions,
+  SortToggleType,
+} from "@table-library/react-table-library/sort";
 import { useState } from "react";
 
 
@@ -23,9 +29,16 @@ const apiResponse = {
     {
       id: 2,
       name: 'Luis Novelo',
-      date: new Date(2020, 1, 15),
+      date: new Date(2019, 1, 15),
       type: 0,
-      isComplete: true,
+      isComplete: false,
+    },
+    {
+      id: 3,
+      name: 'Joshua',
+      date: new Date(2024, 1, 15),
+      type: 1,
+      isComplete: false,
     },
   ],
 };
@@ -34,7 +47,7 @@ const apiResponse = {
 export default function Index() {
   const [data, setData] = useState(apiResponse);
 
-
+  //Handles Delete Data
   const handleRemove = (id) => {
     setData((state) => ({
       ...state,
@@ -42,20 +55,38 @@ export default function Index() {
     }));
   }
 
+  const sort = useSort(
+    data,
+    {
+      onChange: onSortChange,
+    },
+    {
+      sortFns: {
+        NAME: (array) => array.sort((a, b) => a.name.localeCompare(b.name)),
+        DATE: (array) => array.sort((a, b) => a.date - b.date),
+        ISCOMPLETE: (array) => array.sort((a, b) => a.isComplete - b.isComplete),
+      },
+    }
+  );
+
+  function onSortChange(action, state) {
+    console.log(action, state);
+  }
+
   return (
     <div>
       <p>This is the index of Quizzes</p>
-      <Table data={data}>
+      <Table data={data} sort={sort}>
         {(tableList) => (
           <>
             <Header>
               <HeaderRow>
-                <HeaderCell sortKey="">Id</HeaderCell>
-                <HeaderCell sortKey="">Name</HeaderCell>
-                <HeaderCell sortKey="">Date</HeaderCell>
-                <HeaderCell sortKey="">Type</HeaderCell>
-                <HeaderCell sortKey="">Complete</HeaderCell>
-                <HeaderCell sortKey="">Actions</HeaderCell>
+                <HeaderCell>Id</HeaderCell>
+                <HeaderCellSort sortKey="NAME">Name</HeaderCellSort>
+                <HeaderCellSort sortKey="DATE">Date</HeaderCellSort>
+                <HeaderCell>Type</HeaderCell>
+                <HeaderCellSort sortKey="ISCOMPLETE">Is Complete</HeaderCellSort>
+                <HeaderCell>Actions</HeaderCell>
               </HeaderRow>
             </Header>
 
