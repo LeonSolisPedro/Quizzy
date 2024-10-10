@@ -40,7 +40,7 @@ const apiResponse = {
       type: 1,
       isComplete: false,
     },
-  ],
+  ]
 };
 
 
@@ -74,41 +74,53 @@ export default function Admin() {
   }
 
   return (
-    <div>
-      <p>This is the index of Admin</p>
-      <Table data={data} sort={sort}>
-        {(tableList) => (
-          <>
-            <Header>
-              <HeaderRow>
-                <HeaderCell>Id</HeaderCell>
-                <HeaderCellSort sortKey="NAME">Name</HeaderCellSort>
-                <HeaderCellSort sortKey="DATE">Date</HeaderCellSort>
-                <HeaderCell>Type</HeaderCell>
-                <HeaderCellSort sortKey="ISCOMPLETE">Is Complete</HeaderCellSort>
-                <HeaderCell>Actions</HeaderCell>
-              </HeaderRow>
-            </Header>
+    <div class="card">
+      <div class="card-header">
+        <h2 className="card-title">List of users</h2>
+        <button className="btn btn-primary">Add User</button>
+      </div>
+      <div className="card-body">
+        <Table data={data} sort={sort}>
+          {(tableList) => (
+            <>
+              <Header>
+                <HeaderRow>
+                  <HeaderCell>Id</HeaderCell>
+                  <HeaderCellSort sortKey="NAME">Name</HeaderCellSort>
+                  <HeaderCellSort sortKey="DATE">Date</HeaderCellSort>
+                  <HeaderCell>Type</HeaderCell>
+                  <HeaderCellSort sortKey="ISCOMPLETE">Is Complete</HeaderCellSort>
+                  <HeaderCell>Actions</HeaderCell>
+                </HeaderRow>
+              </Header>
 
-            <Body>
-              {tableList.map((item) => (
-                <Row item={item} key={item.id}>
-                  <Cell>{item.id}</Cell>
-                  <Cell>{item.name}</Cell>
-                  <Cell>{item.date.toString()}</Cell>
-                  <Cell>{item.type}</Cell>
-                  <Cell>{item.isComplete.toString()}</Cell>
-                  <Cell>
-                    <button type="button" onClick={() => handleRemove(item.id)}>
-                      Remove
-                    </button>
-                  </Cell>
-                </Row>
-              ))}
-            </Body>
-          </>
-        )}
-      </Table>
+              <Body>
+                {tableList.map((item) => (
+                  <Row item={item} key={item.id}>
+                    <Cell>{item.id}</Cell>
+                    <Cell>{item.name}</Cell>
+                    <Cell>{item.date.toString()}</Cell>
+                    <Cell>{item.type}</Cell>
+                    <Cell>{item.isComplete.toString()}</Cell>
+                    <Cell>
+                      <div class="dropdown">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                          Actions
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><button class="dropdown-item" onClick={() => handleRemove(item.id)}>Action</button></li>
+                          <li><button class="dropdown-item">Another action</button></li>
+                          <li><button class="dropdown-item">Something else here</button></li>
+                        </ul>
+                      </div>
+                    </Cell>
+                  </Row>
+                ))}
+              </Body>
+            </>
+          )}
+        </Table>
+      </div>
     </div>
   )
 }

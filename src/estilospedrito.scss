@@ -6,14 +6,18 @@ $card-border-color-dark: #26272F;
 
 //Bootstrap Variables
 $border-radius: 21px !default;
+$btn-border-radius-sm: 21px;
 $btn-padding-y:               11px;
 $btn-padding-x:               16px;
+$btn-padding-y-sm:            4.8px;
+$btn-padding-x-sm:            12.9px;
 $btn-font-size:               16.5px;
 $table-cell-padding-y:        1.1rem;
 $table-cell-padding-x:        1.1rem;
 $font-family-base: 'Inter Variable';
 $card-cap-padding-y: 20px;
 $card-cap-padding-x: 34px;
+$card-spacer-x: 34px;
 $card-cap-bg: unset;
 
 .card {
@@ -37,6 +41,12 @@ $card-cap-bg: unset;
   font-weight: 500;
   margin-bottom: 0px;
   line-height: 1.75!important;
+}
+
+
+[data-table-library_td] > div {
+  white-space: unset !important;
+  overflow: unset !important
 }
 
 @import "~bootstrap/scss/bootstrap";

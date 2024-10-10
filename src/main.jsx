@@ -62,6 +62,7 @@ const router = createBrowserRouter([
 
 //Bootstrap
 import "./estilospedrito.scss"
+import "bootstrap/js/src/dropdown"
 
 
 //Sweetalert
