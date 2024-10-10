@@ -36,7 +36,7 @@ export default function Index() {
               </ul>
             </div>
           </div>
-          <div className="col p-0">
+          <div className="col p-5">
             <Outlet />
           </div>
         </div>

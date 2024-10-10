@@ -1,0 +1,45 @@
+@import '@fontsource-variable/inter';
+
+//My variables
+$card-border-color: #F1F1F4;
+$card-border-color-dark: #26272F;
+
+//Bootstrap Variables
+$border-radius: 21px !default;
+$btn-padding-y:               11px;
+$btn-padding-x:               16px;
+$btn-font-size:               16.5px;
+$table-cell-padding-y:        1.1rem;
+$table-cell-padding-x:        1.1rem;
+$font-family-base: 'Inter Variable';
+$card-cap-padding-y: 20px;
+$card-cap-padding-x: 34px;
+$card-cap-bg: unset;
+
+.card {
+  box-shadow:  0px 3px 4px 0px rgba(0, 0, 0, 0.03);
+  border-color: $card-border-color !important;
+}
+[data-bs-theme="dark"] .card {
+  border-color: $card-border-color-dark !important;
+}
+.card-header {
+  border-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card-title {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 0px;
+  line-height: 1.75!important;
+}
+
+@import "~bootstrap/scss/bootstrap";
+
+
+

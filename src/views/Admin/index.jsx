@@ -109,7 +109,6 @@ export default function Admin() {
           </>
         )}
       </Table>
-      <Link to={`1`}>Go to quizz 1</Link>
     </div>
   )
 }

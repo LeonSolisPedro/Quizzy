@@ -61,7 +61,7 @@ const router = createBrowserRouter([
 ]);
 
 //Bootstrap
-import "./customStyle.scss"
+import "./estilospedrito.scss"
 
 
 //Sweetalert
