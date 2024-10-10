@@ -14,6 +14,7 @@ import {
   SortIconPositions,
   SortToggleType,
 } from "@table-library/react-table-library/sort";
+import { useTheme } from "@table-library/react-table-library/theme";
 import { useState } from "react";
 
 
@@ -55,11 +56,15 @@ export default function Admin() {
     }));
   }
 
+  const theme = useTheme({
+    Table: `
+        --data-table-library_grid-template-columns:  repeat(6,minmax(auto, 1fr));
+      `,
+  });
+
   const sort = useSort(
     data,
-    {
-      onChange: onSortChange,
-    },
+    {},
     {
       sortFns: {
         NAME: (array) => array.sort((a, b) => a.name.localeCompare(b.name)),
@@ -69,10 +74,6 @@ export default function Admin() {
     }
   );
 
-  function onSortChange(action, state) {
-    console.log(action, state);
-  }
-
   return (
     <div class="card">
       <div class="card-header">
@@ -80,7 +81,7 @@ export default function Admin() {
         <button className="btn btn-primary">Add User</button>
       </div>
       <div className="card-body">
-        <Table data={data} sort={sort}>
+        <Table data={data} sort={sort} theme={theme} layout={{ custom: true, horizontalScroll: true }}>
           {(tableList) => (
             <>
               <Header>
@@ -98,7 +99,10 @@ export default function Admin() {
                 {tableList.map((item) => (
                   <Row item={item} key={item.id}>
                     <Cell>{item.id}</Cell>
-                    <Cell>{item.name}</Cell>
+                    <Cell>
+                      <img className="image-50" src="https://hagleysbeauty.com/wp-content/uploads/2023/03/test-button-1.jpg" />
+                      {item.name}
+                    </Cell>
                     <Cell>{item.date.toString()}</Cell>
                     <Cell>{item.type}</Cell>
                     <Cell>{item.isComplete.toString()}</Cell>
