@@ -105,10 +105,12 @@ export default function Admin() {
                     </Cell>
                     <Cell>{item.date.toString()}</Cell>
                     <Cell>{item.type}</Cell>
-                    <Cell>{item.isComplete.toString()}</Cell>
+                    <Cell>
+                      <span className="badge text-bg-success">{item.isComplete.toString()}</span>
+                    </Cell>
                     <Cell>
                       <div class="dropdown">
-                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
                           Actions
                         </button>
                         <ul class="dropdown-menu">

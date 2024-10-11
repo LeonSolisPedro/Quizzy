@@ -1,10 +1,14 @@
 @import '@fontsource-variable/inter';
 
 //My variables
-$card-border-color: #F1F1F4;
-$card-border-color-dark: #26272F;
+$tbody-color: #252F4A;
+$tbody-color-dark: #B5B7C9;
+$thead-color: #98A1B7;
+$thead-color-dark: #646674;
 
 //Bootstrap Variables
+$border-color: #F1F1F4;
+$border-color-dark: #26272F;
 $border-radius: 21px !default;
 $btn-border-radius-sm: 21px;
 $btn-padding-y:               11px;
@@ -22,10 +26,10 @@ $card-cap-bg: unset;
 
 .card {
   box-shadow:  0px 3px 4px 0px rgba(0, 0, 0, 0.03);
-  border-color: $card-border-color !important;
+  border-color: $border-color !important;
 }
 [data-bs-theme="dark"] .card {
-  border-color: $card-border-color-dark !important;
+  border-color: $border-color-dark !important;
 }
 .card-header {
   border-bottom: 0 !important;
@@ -50,6 +54,48 @@ $card-cap-bg: unset;
   width: 50px;
   height: 50px;
   object-fit: cover
+}
+.table > :not(caption) > * > * {
+  border-bottom: 1px dashed $border-color;
+}
+[data-bs-theme="dark"] .table > :not(caption) > * > * {
+  border-bottom: 1px dashed $border-color-dark;
+}
+
+table thead th {
+    color: $thead-color !important;
+    font-weight: 600;
+    font-size: 12.35px;
+    text-transform: uppercase;
+}
+#svg-icon-chevron-single-up-down {
+  fill: $thead-color;
+}
+#svg-icon-chevron-single-up {
+  fill: $thead-color;
+}
+#svg-icon-chevron-single-down {
+  fill: $thead-color;
+}
+[data-bs-theme="dark"] table thead th {
+  color: $thead-color-dark !important;
+}
+[data-bs-theme="dark"] #svg-icon-chevron-single-up-down {
+  fill: $thead-color-dark;
+}
+[data-bs-theme="dark"] #svg-icon-chevron-single-up {
+  fill: $thead-color-dark;
+}
+[data-bs-theme="dark"] #svg-icon-chevron-single-down {
+  fill: $thead-color-dark;
+}
+table tbody td {
+  color: $tbody-color !important;
+  font-size: 13.975px
+}
+[data-bs-theme="dark"] table tbody td {
+  color: $tbody-color-dark !important;
+  font-size: 13.975px
 }
 
 
