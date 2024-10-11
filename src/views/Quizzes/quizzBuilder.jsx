@@ -1,17 +1,28 @@
 import { Link, Outlet } from "react-router-dom";
 
 
-export default function Builder(){
+export default function Builder() {
   return (
-    <div>
-      <p>This is the builder view where the quizz is created</p>
-      <ul>
-        <li><Link to={``}>Settings</Link></li>
-        <li><Link to={`questions`}>Questions</Link></li>
-        <li><Link to={`results`}>Results</Link></li>
-        <li><Link to={`comments`}>Comments</Link></li>
-      </ul>
-      <Outlet />
+    <div class="card">
+      <div class="card-header">
+        <h2 className="card-title">Quizz 1</h2>
+        <Link to={`/quizzes`} className="btn btn-secondary">Return</Link>
+      </div>
+      <div className="card-body container">
+        <div className="row">
+          <div className="col-2">
+            <nav class="nav flex-column nav-quizzbuilder">
+              <Link class="nav-link" to={``}>Settings</Link>
+              <Link class="nav-link" to={`questions`}>Questions</Link>
+              <Link class="nav-link" to={`results`}>Results</Link>
+              <Link class="nav-link" to={`comments`}>Comments</Link>
+            </nav>
+          </div>
+          <div className="col-10">
+            <Outlet />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
