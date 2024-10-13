@@ -8,13 +8,14 @@ export default function Setting() {
   const tiptapRef = useRef()
   const [topics, setTopics] = useState([{ "id": 1, "name": "Education" }, { "id": 2, "name": "Quizz" }, { "id": 3, "name": "Other" }])
   const [userTopic, setTopic] = useState(1);
+
+  //Searching
   const [value, setValue] = useState('');
   const [items, setItems] = useState([]);
-
-
   const search = async (event) => {
-    await new Promise((r) => setTimeout(r, 2000));
-    setItems([...Array(10).keys()].map((item) => event.query + '-' + item));
+    await new Promise((r) => setTimeout(r, 1000));
+    const miau = [...Array(10).keys()].map((item) => event.query + '-' + item)
+    setItems(miau);
   };
 
 
@@ -57,17 +58,18 @@ export default function Setting() {
 
       <div class="mb-3">
         <label class="form-label">Title</label>
-        <div className="card flex justify-content-center">
-          <AutoComplete
-            value={value}
-            suggestions={items}
-            completeMethod={search}
-            onChange={(e) => setValue(e.value)}
-          />
-        </div>
+        <AutoComplete className="d-block autocomplete-pedro"
+          value={value}
+          suggestions={items}
+          completeMethod={search}
+          onChange={(e) => setValue(e.value)}
+          onSelect={(e) => alert("blue")}
+          onClear={(e) => alert("gray")}
+          forceSelection
+        />
       </div>
 
-      
+
       <button type="submit" class="btn btn-primary">Save</button>
     </form>
   )
