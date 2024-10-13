@@ -1,16 +1,22 @@
 import { useEffect, useRef, useState } from "react"
+import { AutoComplete } from 'primereact/autocomplete';
 import Tiptap from "../../components/tiptap"
 import "./setting.css"
 
 export default function Setting() {
   const [image, setImage] = useState(null)
   const tiptapRef = useRef()
-  const topics = useRef()
+  const [topics, setTopics] = useState([{ "id": 1, "name": "Education" }, { "id": 2, "name": "Quizz" }, { "id": 3, "name": "Other" }])
+  const [userTopic, setTopic] = useState(1);
+  const [value, setValue] = useState('');
+  const [items, setItems] = useState([]);
 
-  //Fake database call
-  useEffect(() => {
-    topics.current = [{ "id": 1, "name": "Education" }, { "id": 2, "name": "Quizz" }, { "id": 3, "name": "Other" }];
-  }, []);
+
+  const search = async (event) => {
+    await new Promise((r) => setTimeout(r, 2000));
+    setItems([...Array(10).keys()].map((item) => event.query + '-' + item));
+  };
+
 
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -36,22 +42,32 @@ export default function Setting() {
         </div>
       </div>
       <div className="mb-3">
-        <label class="form-label">Topic</label>
+        <label class="form-label">Topic {userTopic}</label>
         <div className="topic-settings-pedro">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" />
-            <label class="form-check-label">
-              Default radio
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" />
-            <label class="form-check-label">
-              Default checked radio
-            </label>
-          </div>
+          {topics.map(topic => (
+            <div key={topic.id} class="form-check">
+              <input checked={userTopic === topic.id} onClick={() => setTopic(topic.id)} class="form-check-input" type="radio" />
+              <label class="form-check-label">
+                {topic.name}
+              </label>
+            </div>
+          ))}
         </div>
       </div>
+
+      <div class="mb-3">
+        <label class="form-label">Title</label>
+        <div className="card flex justify-content-center">
+          <AutoComplete
+            value={value}
+            suggestions={items}
+            completeMethod={search}
+            onChange={(e) => setValue(e.value)}
+          />
+        </div>
+      </div>
+
+      
       <button type="submit" class="btn btn-primary">Save</button>
     </form>
   )
