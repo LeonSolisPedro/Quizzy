@@ -14,13 +14,13 @@ $border-color: #F1F1F4;
 $border-color-dark: #26272F;
 $border-radius: 21px !default;
 $btn-border-radius-sm: 21px;
-$btn-padding-y:               11px;
-$btn-padding-x:               16px;
-$btn-padding-y-sm:            4.8px;
-$btn-padding-x-sm:            12.9px;
-$btn-font-size:               16.5px;
-$table-cell-padding-y:        1.1rem;
-$table-cell-padding-x:        1.1rem;
+$btn-padding-y: 11px;
+$btn-padding-x: 16px;
+$btn-padding-y-sm: 4.8px;
+$btn-padding-x-sm: 12.9px;
+$btn-font-size: 16.5px;
+$table-cell-padding-y: 1.1rem;
+$table-cell-padding-x: 1.1rem;
 $font-family-base: 'Inter Variable';
 $card-cap-padding-y: 20px;
 $card-cap-padding-x: 34px;
@@ -29,74 +29,91 @@ $card-cap-bg: unset;
 
 // Global
 .card {
-  box-shadow:  0px 3px 4px 0px rgba(0, 0, 0, 0.03);
+  box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.03);
   border-color: $border-color !important;
 }
+
 [data-bs-theme="dark"] .card {
   border-color: $border-color-dark !important;
 }
+
 .card-header {
   border-bottom: 0 !important;
   padding-bottom: 0 !important;
 }
+
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .card-title {
   font-size: 20px;
   font-weight: 500;
   margin-bottom: 0px;
-  line-height: 1.75!important;
+  line-height: 1.75 !important;
 }
-[data-table-library_td] > div {
+
+[data-table-library_td]>div {
   white-space: unset !important;
   overflow: unset !important
 }
+
 .image-50 {
   width: 50px;
   height: 50px;
   object-fit: cover
 }
-.table > :not(caption) > * > * {
+
+.table> :not(caption)>*>* {
   border-bottom: 1px dashed $border-color;
 }
-[data-bs-theme="dark"] .table > :not(caption) > * > * {
+
+[data-bs-theme="dark"] .table> :not(caption)>*>* {
   border-bottom: 1px dashed $border-color-dark;
 }
 
 table thead th {
-    color: $thead-color !important;
-    font-weight: 600;
-    font-size: 12.35px;
-    text-transform: uppercase;
+  color: $thead-color !important;
+  font-weight: 600;
+  font-size: 12.35px;
+  text-transform: uppercase;
 }
+
 #svg-icon-chevron-single-up-down {
   fill: $thead-color;
 }
+
 #svg-icon-chevron-single-up {
   fill: $thead-color;
 }
+
 #svg-icon-chevron-single-down {
   fill: $thead-color;
 }
+
 [data-bs-theme="dark"] table thead th {
   color: $thead-color-dark !important;
 }
+
 [data-bs-theme="dark"] #svg-icon-chevron-single-up-down {
   fill: $thead-color-dark;
 }
+
 [data-bs-theme="dark"] #svg-icon-chevron-single-up {
   fill: $thead-color-dark;
 }
+
 [data-bs-theme="dark"] #svg-icon-chevron-single-down {
   fill: $thead-color-dark;
 }
+
 table tbody td {
   color: $tbody-color !important;
   font-size: 13.975px
 }
+
 [data-bs-theme="dark"] table tbody td {
   color: $tbody-color-dark !important;
   font-size: 13.975px
@@ -110,10 +127,12 @@ table tbody td {
   display: block;
   width: 100%;
 }
+
 [data-pc-name="autocomplete"] svg {
   position: absolute;
   right: 18px;
 }
+
 [data-pc-name="autocomplete"] input:focus {
   color: var(--bs-body-color);
   background-color: var(--bs-body-bg);
@@ -121,6 +140,7 @@ table tbody td {
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
+
 [data-pc-name="autocomplete"] input {
   display: block;
   width: 100%;
@@ -137,8 +157,18 @@ table tbody td {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
+.p-autocomplete-items-wrapper {
+  border-radius: var(--bs-border-radius) !important;
+  background-color: white;
+  box-shadow: 0px 0px 50px 0px rgba(82, 63, 105, 0.15);
+}
+.p-autocomplete-items {
+  margin-top: 15px
+}
+[data-bs-theme="dark"] .p-autocomplete-items-wrapper {
+  background-color: #212529;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.3)
+}
+
 
 @import "~bootstrap/scss/bootstrap";
-
-
-

@@ -4,6 +4,22 @@ import Tiptap from "../../components/tiptap"
 import "./setting.css"
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  Table,
+  Header,
+  HeaderRow,
+  Body,
+  Row,
+  HeaderCell,
+  Cell,
+} from "@table-library/react-table-library/table";
+import {
+  useSort,
+  HeaderCellSort,
+  SortIconPositions,
+  SortToggleType,
+} from "@table-library/react-table-library/sort";
+import { useTheme } from "@table-library/react-table-library/theme";
 
 export default function Setting() {
 
@@ -17,13 +33,38 @@ export default function Setting() {
   const [selectedUser, setSelectedUser] = useState('');
   const [selectedUserLists, setSelectedUserLists] = useState([]);
   const [canAddUser, setCanAddUser] = useState(false)
+  const [userList, setUserList] = useState({ nodes: [{ id: 1, name: "Test", email: "test@wintercr.com" }] })
   const search = async (event) => {
     await new Promise((r) => setTimeout(r, 1000));
-    setSelectedUserLists([{ "id": 1, "name": "Pedro León", "email": "pedro@wintercr.com" }, { "id": 2, "name": "Diego Janus", "email": "diego@wintercr.com" }, { "id": 3, "name": "Jaime Alonso", "email" : "jaime@wintercr.com" }]);
+    setSelectedUserLists([{ "id": 1, "name": "Pedro León", "email": "pedro@wintercr.com" }, { "id": 2, "name": "Diego Janus", "email": "diego@wintercr.com" }, { "id": 3, "name": "Jaime Alonso", "email": "jaime@wintercr.com" }]);
   };
   const addUserToTable = () => {
     resetSearch()
+    setUserList(state => ({
+      ...state,
+      nodes: state.nodes.concat(selectedUser)
+    }))
   }
+  const handleRemove = (id) => {
+    setUserList(state => ({
+      nodes: state.nodes.filter((node) => node.id !== id),
+    }));
+  }
+  const theme = useTheme({
+    Table: `
+        --data-table-library_grid-template-columns:  repeat(3,minmax(auto, 1fr));
+      `,
+  });
+  const sort = useSort(
+    userList,
+    {},
+    {
+      sortFns: {
+        NAME: (array) => array.sort((a, b) => a.name.localeCompare(b.name)),
+        EMAIL: (array) => array.sort((a, b) => a.email.localeCompare(b.email)),
+      },
+    }
+  );
   const resetSearch = () => {
     setSelectedUser('')
     setSelectedUserLists([])
@@ -70,13 +111,17 @@ export default function Setting() {
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Access Status {Check ? 'Checked' : 'Not checked'}</label>
+        <label class="form-label mb-2">Access Status</label>
+
         <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" checked={Check ? true : false} role="switch" onChange={(e) => setCheck(e.target.checked) } />
-          <label class="form-check-label">Enable private</label>
+          <input class="form-check-input" type="checkbox" checked={Check ? true : false} role="switch" onChange={(e) => setCheck(e.target.checked)} />
+          <label class="form-check-label">Make private</label>
         </div>
+      </div>
+
+      <div className="mb-3" style={{ display: Check ? 'block' : 'none' }}>
+        <label class="form-label">Add User</label>
         {/* Render above based on Check true and false */}
-        <div class="form-text">Description</div>
         <div class="d-flex">
           <AutoComplete
             field="name"
@@ -90,8 +135,32 @@ export default function Setting() {
             forceSelection />
           <button type="button" onClick={e => addUserToTable()} disabled={!canAddUser} class="btn btn-primary btn-sm"><FontAwesomeIcon icon={faPlus} /></button>
         </div>
+        <div class="form-text">Only the users below have access to the quizz, search by name or email and added it to the table</div>
+        <Table data={userList} sort={sort} theme={theme} layout={{ custom: true, horizontalScroll: true }}>
+          {(tableList) => (
+            <>
+              <Header>
+                <HeaderRow>
+                  <HeaderCellSort sortKey="NAME">Name</HeaderCellSort>
+                  <HeaderCellSort sortKey="EMAIL">Email</HeaderCellSort>
+                  <HeaderCell>Actions</HeaderCell>
+                </HeaderRow>
+              </Header>
+              <Body>
+                {tableList.map((item) => (
+                  <Row item={item} key={item.id}>
+                    <Cell>{item.name}</Cell>
+                    <Cell>{item.email}</Cell>
+                    <Cell>
+                      <button type="button" class="btn btn-light btn-sm" onClick={() => handleRemove(item.id)}>Remove</button>
+                    </Cell>
+                  </Row>
+                ))}
+              </Body>
+            </>
+          )}
+        </Table>
         {/* End rendering */}
-
       </div>
 
 

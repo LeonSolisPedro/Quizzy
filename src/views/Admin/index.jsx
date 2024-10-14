@@ -50,7 +50,7 @@ export default function Admin() {
 
   //Handles Delete Data
   const handleRemove = (id) => {
-    setData((state) => ({
+    setData(state => ({
       ...state,
       nodes: state.nodes.filter((node) => node.id !== id),
     }));
