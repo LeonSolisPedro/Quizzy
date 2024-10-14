@@ -4,12 +4,14 @@ import Tiptap from "../../components/tiptap"
 import "./setting.css"
 
 export default function Setting() {
-  const [image, setImage] = useState(null)
+  
   const tiptapRef = useRef()
   const [topics, setTopics] = useState([{ "id": 1, "name": "Education" }, { "id": 2, "name": "Quizz" }, { "id": 3, "name": "Other" }])
   const [userTopic, setTopic] = useState(1);
+  
 
-  //Searching
+  //Searching and adding
+  const [Check, setCheck] = useState(true);
   const [value, setValue] = useState('');
   const [items, setItems] = useState([]);
   const search = async (event) => {
@@ -18,7 +20,8 @@ export default function Setting() {
     setItems(miau);
   };
 
-
+  //Image
+  const [image, setImage] = useState(null)
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       setImage(URL.createObjectURL(event.target.files[0]));
@@ -57,16 +60,26 @@ export default function Setting() {
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Title</label>
-        <AutoComplete className="d-block autocomplete-pedro"
-          value={value}
-          suggestions={items}
-          completeMethod={search}
-          onChange={(e) => setValue(e.value)}
-          onSelect={(e) => alert("blue")}
-          onClear={(e) => alert("gray")}
-          forceSelection
-        />
+        <label class="form-label">Access Status {Check ? 'Checked' : 'Not checked'}</label>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" checked={Check ? true : false} role="switch" onChange={(e) => setCheck(e.target.checked) } />
+          <label class="form-check-label">Enable private</label>
+        </div>
+        {/* Render above based on Check true and false */}
+        <div class="form-text">Description</div>
+        <div className="d-flex">
+          <AutoComplete className="d-block w-100 autocomplete-pedro"
+            value={value}
+            suggestions={items}
+            completeMethod={search}
+            onChange={(e) => setValue(e.value)}
+            onSelect={(e) => console.log("blue")}
+            onClear={(e) => console.log("gray")}
+            forceSelection
+          />
+        </div>
+        {/* End rendering */}
+
       </div>
 
 
