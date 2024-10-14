@@ -2,23 +2,33 @@ import { useEffect, useRef, useState } from "react"
 import { AutoComplete } from 'primereact/autocomplete';
 import Tiptap from "../../components/tiptap"
 import "./setting.css"
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Setting() {
-  
+
   const tiptapRef = useRef()
   const [topics, setTopics] = useState([{ "id": 1, "name": "Education" }, { "id": 2, "name": "Quizz" }, { "id": 3, "name": "Other" }])
   const [userTopic, setTopic] = useState(1);
-  
+
 
   //Searching and adding
   const [Check, setCheck] = useState(true);
-  const [value, setValue] = useState('');
-  const [items, setItems] = useState([]);
+  const [selectedUser, setSelectedUser] = useState('');
+  const [selectedUserLists, setSelectedUserLists] = useState([]);
+  const [canAddUser, setCanAddUser] = useState(false)
   const search = async (event) => {
     await new Promise((r) => setTimeout(r, 1000));
-    const miau = [...Array(10).keys()].map((item) => event.query + '-' + item)
-    setItems(miau);
+    setSelectedUserLists([{ "id": 1, "name": "Pedro León", "email": "pedro@wintercr.com" }, { "id": 2, "name": "Diego Janus", "email": "diego@wintercr.com" }, { "id": 3, "name": "Jaime Alonso", "email" : "jaime@wintercr.com" }]);
   };
+  const addUserToTable = () => {
+    resetSearch()
+  }
+  const resetSearch = () => {
+    setSelectedUser('')
+    setSelectedUserLists([])
+    setCanAddUser(false)
+  }
 
   //Image
   const [image, setImage] = useState(null)
@@ -50,7 +60,7 @@ export default function Setting() {
         <div className="topic-settings-pedro">
           {topics.map(topic => (
             <div key={topic.id} class="form-check">
-              <input checked={userTopic === topic.id} onClick={() => setTopic(topic.id)} class="form-check-input" type="radio" />
+              <input checked={userTopic === topic.id} onChange={() => setTopic(topic.id)} class="form-check-input" type="radio" />
               <label class="form-check-label">
                 {topic.name}
               </label>
@@ -67,16 +77,18 @@ export default function Setting() {
         </div>
         {/* Render above based on Check true and false */}
         <div class="form-text">Description</div>
-        <div className="d-flex">
-          <AutoComplete className="d-block w-100 autocomplete-pedro"
-            value={value}
-            suggestions={items}
+        <div class="d-flex">
+          <AutoComplete
+            field="name"
+            value={selectedUser}
+            suggestions={selectedUserLists}
             completeMethod={search}
-            onChange={(e) => setValue(e.value)}
-            onSelect={(e) => console.log("blue")}
-            onClear={(e) => console.log("gray")}
-            forceSelection
-          />
+            onChange={e => setSelectedUser(e.value)}
+            onSelect={e => setCanAddUser(true)}
+            onClear={e => setCanAddUser(false)}
+            onKeyUp={e => setCanAddUser(false)}
+            forceSelection />
+          <button type="button" onClick={e => addUserToTable()} disabled={!canAddUser} class="btn btn-primary btn-sm"><FontAwesomeIcon icon={faPlus} /></button>
         </div>
         {/* End rendering */}
 
