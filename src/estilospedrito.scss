@@ -28,6 +28,31 @@ $card-spacer-x: 34px;
 $card-cap-bg: unset;
 
 // Global
+.webkit-line-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.webkit-line-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.webkit-line-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.webkit-line-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .card {
   box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.03);
   border-color: $border-color !important;
@@ -178,6 +203,24 @@ table tbody td {
 [data-bs-theme="dark"] .p-autocomplete-items-wrapper {
   background-color: #212529;
   box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.3)
+}
+
+// Quiz
+.globalimage-quizz {
+  width: 133px;
+  aspect-ratio: 1/1;
+  margin: 0 auto;
+  display: block;
+  object-fit: cover
+}
+.cardglobal-quizz {
+  background-color: #F8FBFF !important;
+}
+[data-bs-theme="dark"] .cardglobal-quizz {
+  background-color: #182331 !important;
+}
+.cardglobalquestion-quizz {
+  background-color: #F9FAFB !important;
 }
 
 
