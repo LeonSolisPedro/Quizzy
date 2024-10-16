@@ -1,13 +1,22 @@
-import { useRef, useState } from "react"
+import { useMemo, useRef, useState } from "react"
 
 
 
 export default function Question() {
   const [questions, setQuestion] = useState([
-    { id: 1, typeOfQuestion: 0, title: 'Title of Question 1', description: 'Description', visibleAtTable: false, lastEditedAdmin: null, order: 1 },
-    { id: 2, typeOfQuestion: 0, title: 'Title of Question 2', description: 'Description', visibleAtTable: false, lastEditedAdmin: null, order: 2 },
-    { id: 44, typeOfQuestion: 0, title: 'Title of Question 3', description: 'Description', visibleAtTable: false, lastEditedAdmin: null, order: 3 }
+    { id: 1, typeOfQuestion: 0, title: 'Question 1', description: 'Description', visibleAtTable: false, lastEditedAdminId: null,lastEditedAdmin: null, answer: null, order: 1 },
+    { id: 2, typeOfQuestion: 0, title: 'Question 2', description: 'Description', visibleAtTable: false, lastEditedAdminId: null,lastEditedAdmin: null, answer: null, order: 2 },
+    { id: 44, typeOfQuestion: 0, title: 'Question 3', description: 'Description', visibleAtTable: false, lastEditedAdminId: null,lastEditedAdmin: null, answer: null, order: 3 }
   ])
+  const [quizz, setQuizz] = useState({id: 5, title: "Quizz that you have to complete because you are an intern", userId: 1})
+  const yourUserId = 1;
+  const isAdminEditing = useMemo(() => yourUserId !== quizz.userId);
+
+
+  // Handler to update the description of a specific question
+  const handleInputChange = (id, newDescription) => {
+    setQuestion(x => x.map(question => question.id === id ? { ...question, description: newDescription, lastEditedAdminId: isAdminEditing ? yourUserId : null } : question));
+  };
 
   //Sorting functionality
   //I copied from here: https://www.youtube.com/watch?v=_nZCvxJOPwU
@@ -63,6 +72,8 @@ export default function Question() {
           onDragOver={(e) => e.preventDefault()}
         >
           <h6>{question.order}.- {question.title}</h6>
+          <input type="text" className="form-control" onChange={(e) => handleInputChange(question.id, e.target.value)} value={question.description} />
+          <p>{question.description}</p>
         </div>
       ))}
 
