@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState } from "react"
-import { quizzFakeData3 } from "../../components/fakeQuizzData"
+import { quizzFakeData3, userResponse1 } from "../../components/fakeQuizzData"
 import QuestionsToDisplay from "../../components/questionstodisplay"
+import QuizzReponseHeader from "../../components/quizzresponseheader"
 import QuizzHeader from "../../components/quizzheader"
 import { v4 as uuidv4 } from 'uuid';
 
@@ -16,6 +17,7 @@ export default function Question() {
   return (
     <div>
       <QuizzHeader quizzParam={quizz} />
+      <QuizzReponseHeader userResponseParam={userResponse1} />
       <QuestionsToDisplay quizzParam={quizz} onQuizzChange={e => setQuizz(e)} editable={true} editAnswers={true} />
       <button onClick={addQuestion} className="btn btn-primary">Add Question</button>
     </div>

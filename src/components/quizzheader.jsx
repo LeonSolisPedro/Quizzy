@@ -4,7 +4,6 @@ import { useState } from "react"
 export default function QuizzHeader({quizzParam}) {
   const [quizz, setQuizz] = useState(quizzParam)
 
-
   return (
     <div>
       <div className="container-fluid card border-0 cardglobal-quizz p-4 shadow-none mb-5">
@@ -48,6 +47,5 @@ export default function QuizzHeader({quizzParam}) {
         </div>
       </div>
     </div>
-
   )
 }

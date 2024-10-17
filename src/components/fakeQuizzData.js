@@ -45,6 +45,19 @@ const quizzFakeData3 = {
     { id: 55, typeOfQuestion: 3, title: 'Question 4', description: 'Did you finish task6?', visibleAtTable: true, lastEditedAdminId: null, lastEditedAdmin: null, answer: {answer: "", answerCheckbox: true}, order: 4, reactId: "7f47a620-eaad-46d6-a260-d7fa322c5b66" },
   ]
 }
+const userResponse1 = {
+  id: 534,
+  responseDate: Date.now(),
+  userId: 444,
+  user: {name: "Pedro León"},
+  quizzId: 909,
+  quizz: {
+    title: "Quizz that you have to complete because you are an intern",
+    topic: {name: "Education 📚"},
+    quizzTags: [{tag: {id: 1,name: "Tag1"}},{tag: {id: 2,name: "Tag2"}}],
+  },
+  score: 0
+}
 
 //My answers
 //Answer has an object
@@ -87,4 +100,4 @@ const quizzFakeData5 = {
 
 
 
-export {quizzFakeData1, quizzFakeData2, quizzFakeData3, quizzFakeData4, quizzFakeData5};
+export {quizzFakeData1, quizzFakeData2, quizzFakeData3, quizzFakeData4, quizzFakeData5, userResponse1};
