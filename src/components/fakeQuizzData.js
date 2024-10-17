@@ -2,6 +2,8 @@
 const quizzFakeData1 = {
   id: 5,
   title: "Quizz that you have to complete because you are an intern",
+  topic: {name: "Education 📚"},
+  quizzTags: [{tag: {id: 1,name: "Tag1"}},{tag: {id: 2,name: "Tag2"}}],
   userId: 1,
   questions: [
     { id: 1, typeOfQuestion: 2, title: 'Question 1', description: 'How many apples do you eat per day?', visibleAtTable: true, lastEditedAdminId: 999, lastEditedAdmin: null, answer: null, order: 1, reactId: "1f47a620-eaad-46d6-a260-d7fa322c5b24" },
@@ -15,6 +17,8 @@ const quizzFakeData1 = {
 const quizzFakeData2 = {
   id: 5,
   title: "Quizz that you have to complete because you are an intern",
+  topic: {name: "Education 📚"},
+  quizzTags: [{tag: {id: 1,name: "Tag1"}},{tag: {id: 2,name: "Tag2"}}],
   userId: 1,
   questions: [
     { id: 1, typeOfQuestion: 2, title: 'Question 1', description: 'How many apples do you eat per day?', visibleAtTable: true, lastEditedAdminId: 999, lastEditedAdmin: {name: "Pedro León"}, answer: null, order: 1, reactId: "4f47a620-eaad-46d6-a260-d7fa322c5b24" },
@@ -31,6 +35,8 @@ const quizzFakeData2 = {
 const quizzFakeData3 = {
   id: 5,
   title: "Quizz that you have to complete because you are an intern",
+  topic: {name: "Education 📚"},
+  quizzTags: [{tag: {id: 1,name: "Tag1"}},{tag: {id: 2,name: "Tag2"}}],
   userId: 1,
   questions: [
     { id: 1, typeOfQuestion: 2, title: 'Question 1', description: 'How many apples do you eat per day?', visibleAtTable: true, lastEditedAdminId: 999, lastEditedAdmin: {name: "Pedro León"}, answer: {answer: "42", answerCheckbox: false}, order: 1, reactId: "7f47a620-eaad-46d6-a260-d7fa322c5b24" },
@@ -45,6 +51,8 @@ const quizzFakeData3 = {
 const quizzFakeData4 = {
   id: 5,
   title: "Quizz that you have to complete because you are an intern",
+  topic: {name: "Education 📚"},
+  quizzTags: [{tag: {id: 1,name: "Tag1"}},{tag: {id: 2,name: "Tag2"}}],
   userId: 1,
   questions: [
     { id: 1, typeOfQuestion: 2, title: 'Question 1', description: 'How many apples do you eat per day?', visibleAtTable: true, lastEditedAdminId: 999, lastEditedAdmin: null, answer: {answer: "42", answerCheckbox: false}, order: 1, reactId: "9f47a620-1aad-46d6-a260-d7fa322c5b24" },
@@ -59,6 +67,8 @@ const quizzFakeData4 = {
 const quizzFakeData5 = {
   id: 5,
   title: "Quizz that you have to complete because you are an intern",
+  topic: {name: "Education 📚"},
+  quizzTags: [{tag: {id: 1,name: "Tag1"}},{tag: {id: 2,name: "Tag2"}}],
   userId: 1,
   questions: [
     { id: 1, typeOfQuestion: 2, title: 'Question 1', description: 'How many apples do you eat per day?', visibleAtTable: true, lastEditedAdminId: 999, lastEditedAdmin: null, answer: {answer: "999", answerCheckbox: false}, order: 1, reactId: "9f47a620-4aad-46d6-a260-d7fa322c5b24" },

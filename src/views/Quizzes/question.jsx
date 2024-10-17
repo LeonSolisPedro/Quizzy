@@ -15,8 +15,8 @@ export default function Question() {
 
   return (
     <div>
-      <QuizzHeader />
-      <QuestionsToDisplay quizzParam={quizz} onQuizzChange={e => setQuizz(e)} editAnswers={true} />
+      <QuizzHeader quizzParam={quizz} />
+      <QuestionsToDisplay quizzParam={quizz} onQuizzChange={e => setQuizz(e)} editable={true} editAnswers={true} />
       <button onClick={addQuestion} className="btn btn-primary">Add Question</button>
     </div>
   )
