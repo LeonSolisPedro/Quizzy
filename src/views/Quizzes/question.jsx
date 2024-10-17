@@ -1,21 +1,22 @@
 import { useMemo, useRef, useState } from "react"
-import { quizzFakeData1 } from "../../components/fakeQuizzData"
+import { quizzFakeData3 } from "../../components/fakeQuizzData"
 import QuestionsToDisplay from "../../components/questionstodisplay"
 import QuizzHeader from "../../components/quizzheader"
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Question() {
-  const [quizz, setQuizz] = useState(quizzFakeData1)
-  const quizzLength = useMemo(() => quizz.questions.length + 1);
+  const [quizz, setQuizz] = useState(quizzFakeData3)
+  const length = useMemo(() => quizz.questions.length + 1);
 
   //Adds a new question
   const addQuestion = () => {
-    setQuizz(x => ({...x, questions: [...x.questions, { id: 0, typeOfQuestion: 3, title: `New Question ${quizzLength}`, description: `Description ${quizzLength}`, visibleAtTable: false, lastEditedAdminId: null, lastEditedAdmin: null, answer: null, order: quizzLength }]}))
+    setQuizz(x => ({...x, questions: [...x.questions, { id: 0, reactId: uuidv4(),typeOfQuestion: 3, title: `New Question ${length}`, description: `Description ${length}`, visibleAtTable: false, lastEditedAdminId: null, lastEditedAdmin: null, answer: null, order: length }]}))
   }
 
   return (
     <div>
       <QuizzHeader />
-      <QuestionsToDisplay quizzParam={quizz} onQuizzChange={e => setQuizz(e)} editable={true} />
+      <QuestionsToDisplay quizzParam={quizz} onQuizzChange={e => setQuizz(e)} editAnswers={true} />
       <button onClick={addQuestion} className="btn btn-primary">Add Question</button>
     </div>
   )
