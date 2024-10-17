@@ -219,9 +219,63 @@ table tbody td {
 [data-bs-theme="dark"] .cardglobal-quizz {
   background-color: #182331 !important;
 }
+textarea.formcontrolquestion-quizz {
+  min-height: 95px !important;
+  resize: none;
+}
 .cardglobalquestion-quizz {
   background-color: #F9FAFB !important;
+  position: relative;
 }
+
+.toolbarquestion-quizz {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  position: absolute;
+  right: 26px;
+  max-width: 20%;
+  justify-content: end;
+}
+
+.toolbartitlequestion-quizz {
+  max-width: 78%;
+}
+@media(max-width: 1091px) {
+  .toolbarquestion-quizz {
+    position: relative;
+    max-width: 100%;
+    right: 0px;
+    margin-bottom: 10px;
+    align-items: center;
+  }
+
+  .toolbartitlequestion-quizz {
+    max-width: 100%;
+  }
+}
+
+.editedquestion-quizz {
+  font-size: 11px
+}
+.editedanswer-quizz {
+  font-size: 11px;
+  margin-left: 6px;
+  margin-top: 4px;
+}
+
+.editabletitlequestion-quizz {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.editabledescquestion-quizz {
+  min-height: 95px !important;
+  resize: none;
+  margin-bottom: 9px;
+}
+
 
 
 @import "~bootstrap/scss/bootstrap";
