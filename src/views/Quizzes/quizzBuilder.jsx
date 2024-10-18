@@ -6,7 +6,8 @@ export default function Builder() {
     <div class="card">
       <div class="card-header">
         <h2 className="card-title">Quizz 1</h2>
-        <Link to={`/quizzes`} className="btn btn-secondary">Return</Link>
+        <Link id="return" to={`/quizzes`} className="btn btn-secondary">Return</Link>
+        <Link id="returnresults" to={`results`} className="btn btn-secondary d-none">Return</Link>
       </div>
       <div className="card-body container">
         <div className="row">

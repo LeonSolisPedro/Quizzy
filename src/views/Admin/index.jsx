@@ -232,7 +232,7 @@ export default function Admin() {
       </div>
 
       <div class="modal fade" id="userModal" tabIndex="-1">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <h1 class="modal-title fs-5">Add User</h1>

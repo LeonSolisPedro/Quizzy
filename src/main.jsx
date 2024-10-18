@@ -12,6 +12,7 @@ import Comment from './views/Quizzes/comment'
 import Answer from "./views/Answer/index"
 import Admin from "./views/Admin/index"
 import AnswerDetail from './views/Answer/answerDetail';
+import ResultDetail from './views/Quizzes/resultDetail';
 import "./axios"
 
 const router = createBrowserRouter([
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
           {
             path: "/quizzes/:quizzId/results",
             element: <Result />
+          },
+          {
+            path: "/quizzes/:quizzId/results/:userResponseId",
+            element: <ResultDetail />
           },
           {
             path: "/quizzes/:quizzId/comments",

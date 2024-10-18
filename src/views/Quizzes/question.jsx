@@ -1,8 +1,6 @@
-import { useMemo, useRef, useState } from "react"
+import { useMemo, useState } from "react"
 import { quizzFakeData2 } from "../../components/fakeQuizzData"
 import QuestionsToDisplay from "../../components/questionstodisplay"
-import QuizzReponseHeader from "../../components/quizzresponseheader"
-import QuizzHeader from "../../components/quizzheader"
 import { v4 as uuidv4 } from 'uuid';
 
 export default function Question() {

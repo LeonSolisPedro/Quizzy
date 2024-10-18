@@ -20,7 +20,7 @@ export default function QuizzReponseHeader({userResponseParam}){
       <div className="container-fluid card border-0 cardglobal-quizz p-4 shadow-none mb-5">
         <div className="row">
           <div className="col-xl-3 d-flex justify-content-center align-items-center">
-            <img className="globalimage-quizz rounded mb-4 mb-xl-0" src="https://s3.r29static.com/bin/entry/b1c/430x516,85/1558175/image.webp"></img>
+            <img className="globalimage-quizz rounded mb-4 mb-xl-0" src="https://i.pinimg.com/originals/68/28/4c/68284c53b5f4d7d94cd40fa19c9fd21d.jpg"></img>
           </div>
           <div className="col-xl-9">
             <div className="mb-3">
