@@ -253,7 +253,7 @@ export default function Admin() {
                   <input type="password" required class="form-control" value={user.password} onChange={e => updateUser("password", e.target.value)} />
                 </div>
                 <div className="mb-3">
-                  <label className="form-label">Profile Picture</label>
+                  <label className="form-label">Profile picture</label>
                   <input type="file" onChange={onImageChange} className="form-control" />
                 </div>
               </form>

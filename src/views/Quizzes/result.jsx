@@ -17,6 +17,8 @@ import {
 import { useTheme } from "@table-library/react-table-library/theme";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import QuestionsToDisplay from "../../components/questionstodisplay"
+import { quizzFakeData5 } from "../../components/fakeQuizzData"
 
 const apiResponse = {
   nodes: [
@@ -53,7 +55,9 @@ const apiResponse = {
   ]
 };
 
-export default function Result(){
+export default function Result() {
+  const [selectedOption, setSelectedOption] = useState("all");
+  const [quizz, setQuizz] = useState(quizzFakeData5)
   const [data, setData] = useState(apiResponse);
 
   //Handles Delete Data
@@ -105,46 +109,53 @@ export default function Result(){
 
   return (
     <div>
-      <Table data={data} sort={sort} theme={theme} layout={{ custom: true, horizontalScroll: true }}>
-          {(tableList) => (
-            <>
-              <Header>
-                <HeaderRow>
-                  <HeaderCellSort sortKey="NAME">Name</HeaderCellSort>
-                  <HeaderCellSort sortKey="EMAIL">Email</HeaderCellSort>
-                  <HeaderCellSort sortKey="RESPONSEDATE">Date</HeaderCellSort>
-                  <HeaderCellSort sortKey="SCORE">Score</HeaderCellSort>
-                  <HeaderCell>Actions</HeaderCell>
-                </HeaderRow>
-              </Header>
+      <select value={selectedOption} onChange={e => setSelectedOption(e.target.value)} class="form-select select-agreggation">
+        <option value="all">All Results</option>
+        <option value="aggregation">Aggregation Results</option>
+      </select>
+      <Table style={{ display: selectedOption === "all" ? '' : 'none' }} data={data} sort={sort} theme={theme} layout={{ custom: true, horizontalScroll: true }}>
+        {(tableList) => (
+          <>
+            <Header>
+              <HeaderRow>
+                <HeaderCellSort sortKey="NAME">Name</HeaderCellSort>
+                <HeaderCellSort sortKey="EMAIL">Email</HeaderCellSort>
+                <HeaderCellSort sortKey="RESPONSEDATE">Date</HeaderCellSort>
+                <HeaderCellSort sortKey="SCORE">Score</HeaderCellSort>
+                <HeaderCell>Actions</HeaderCell>
+              </HeaderRow>
+            </Header>
 
-              <Body>
-                {tableList.map((item) => (
-                  <Row item={item} key={item.id}>
-                    <Cell>
-                      <img className="image-50" src={item.user.URLImage} />
-                      {item.user.name}
-                    </Cell>
-                    <Cell>{item.user.email}</Cell>
-                    <Cell>{formatDate(item.responseDate)}</Cell>
-                    <Cell>{item.score}</Cell>
-                    <Cell>
-                      <div class="dropdown">
-                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                          Actions
-                        </button>
-                        <ul class="dropdown-menu">
-                          <li><Link to={`${item.id}`} class="dropdown-item" >View</Link></li>
-                          <li><button class="dropdown-item" onClick={() => handleRemove(item.id)}>Delete</button></li>
-                        </ul>
-                      </div>
-                    </Cell>
-                  </Row>
-                ))}
-              </Body>
-            </>
-          )}
-        </Table>
+            <Body>
+              {tableList.map((item) => (
+                <Row item={item} key={item.id}>
+                  <Cell>
+                    <img className="image-50" src={item.user.URLImage} />
+                    {item.user.name}
+                  </Cell>
+                  <Cell>{item.user.email}</Cell>
+                  <Cell>{formatDate(item.responseDate)}</Cell>
+                  <Cell>{item.score}</Cell>
+                  <Cell>
+                    <div class="dropdown">
+                      <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        Actions
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><Link to={`${item.id}`} class="dropdown-item" >View</Link></li>
+                        <li><button class="dropdown-item" onClick={() => handleRemove(item.id)}>Delete</button></li>
+                      </ul>
+                    </div>
+                  </Cell>
+                </Row>
+              ))}
+            </Body>
+          </>
+        )}
+      </Table>
+      <div style={{ display: selectedOption === "aggregation" ? '' : 'none' }}>
+        <QuestionsToDisplay style={{ display: selectedOption === "aggregation" ? '' : 'none' }} quizzParam={quizz} />
+      </div>
     </div>
   )
 }
