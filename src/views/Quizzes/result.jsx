@@ -16,29 +16,39 @@ import {
 } from "@table-library/react-table-library/sort";
 import { useTheme } from "@table-library/react-table-library/theme";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 const apiResponse = {
   nodes: [
     {
       id: 1,
-      name: 'Pedro León',
-      date: new Date(2020, 1, 15),
-      type: 1,
-      isComplete: true,
+      responseDate: Date.now(),
+      user: {
+        name: 'Pedro León',
+        email: "pedro@wintercr.com",
+        URLImage: "https://i.pinimg.com/originals/68/28/4c/68284c53b5f4d7d94cd40fa19c9fd21d.jpg"
+      },
+      score: 0
     },
     {
       id: 2,
-      name: 'Luis Novelo',
-      date: new Date(2019, 1, 15),
-      type: 0,
-      isComplete: false,
+      responseDate: Date.now(),
+      user: {
+        name: 'test',
+        email: "test@wintercr.com",
+        URLImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTP1z8odEN0zQOtOlL8wDp5lFcFqZpTBMCpCA&s"
+      },
+      score: 0
     },
     {
       id: 3,
-      name: 'Joshua',
-      date: new Date(2024, 1, 15),
-      type: 1,
-      isComplete: false,
+      responseDate: Date.now(),
+      user: {
+        name: 'Luis Novelo',
+        email: "novelo@wintercr.com",
+        URLImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIwLjmr5uIJXFVZEVDi6FdkKuLB4AKh-TuNA&s"
+      },
+      score: 5
     },
   ]
 };
@@ -47,16 +57,35 @@ export default function Result(){
   const [data, setData] = useState(apiResponse);
 
   //Handles Delete Data
-  const handleRemove = (id) => {
+  const handleRemove = async (id) => {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Continue'
+    });
+    if (!result.isConfirmed) return
     setData(state => ({
       ...state,
       nodes: state.nodes.filter((node) => node.id !== id),
     }));
   }
 
+  //Format the date
+  const formatDate = (utcDateString) => {
+    return new Date(utcDateString).toLocaleString(undefined, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    });
+  }
+
   const theme = useTheme({
     Table: `
-        --data-table-library_grid-template-columns:  repeat(6,minmax(auto, 1fr));
+        --data-table-library_grid-template-columns:  repeat(5,minmax(auto, 1fr));
       `,
   });
 
@@ -65,9 +94,10 @@ export default function Result(){
     {},
     {
       sortFns: {
-        NAME: (array) => array.sort((a, b) => a.name.localeCompare(b.name)),
-        DATE: (array) => array.sort((a, b) => a.date - b.date),
-        ISCOMPLETE: (array) => array.sort((a, b) => a.isComplete - b.isComplete),
+        NAME: (array) => array.sort((a, b) => a.user.name.localeCompare(b.user.name)),
+        EMAIL: (array) => array.sort((a, b) => a.user.email.localeCompare(b.user.email)),
+        RESPONSEDATE: (array) => array.sort((a, b) => a.responseDate - b.responseDate),
+        SCORE: (array) => array.sort((a, b) => a.score - b.score)
       },
     }
   );
@@ -80,11 +110,10 @@ export default function Result(){
             <>
               <Header>
                 <HeaderRow>
-                  <HeaderCell>Id</HeaderCell>
                   <HeaderCellSort sortKey="NAME">Name</HeaderCellSort>
-                  <HeaderCellSort sortKey="DATE">Date</HeaderCellSort>
-                  <HeaderCell>Type</HeaderCell>
-                  <HeaderCellSort sortKey="ISCOMPLETE">Is Complete</HeaderCellSort>
+                  <HeaderCellSort sortKey="EMAIL">Email</HeaderCellSort>
+                  <HeaderCellSort sortKey="RESPONSEDATE">Date</HeaderCellSort>
+                  <HeaderCellSort sortKey="SCORE">Score</HeaderCellSort>
                   <HeaderCell>Actions</HeaderCell>
                 </HeaderRow>
               </Header>
@@ -92,16 +121,13 @@ export default function Result(){
               <Body>
                 {tableList.map((item) => (
                   <Row item={item} key={item.id}>
-                    <Cell>{item.id}</Cell>
                     <Cell>
-                      <img className="image-50" src="https://hagleysbeauty.com/wp-content/uploads/2023/03/test-button-1.jpg" />
-                      {item.name}
+                      <img className="image-50" src={item.user.URLImage} />
+                      {item.user.name}
                     </Cell>
-                    <Cell>{item.date.toString()}</Cell>
-                    <Cell>{item.type}</Cell>
-                    <Cell>
-                      <span className="badge text-bg-success">{item.isComplete.toString()}</span>
-                    </Cell>
+                    <Cell>{item.user.email}</Cell>
+                    <Cell>{formatDate(item.responseDate)}</Cell>
+                    <Cell>{item.score}</Cell>
                     <Cell>
                       <div class="dropdown">
                         <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">

@@ -16,6 +16,7 @@ import {
 } from "@table-library/react-table-library/sort";
 import { useTheme } from "@table-library/react-table-library/theme";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 
 const apiResponse = {
@@ -23,23 +24,26 @@ const apiResponse = {
     {
       id: 1,
       name: 'Pedro León',
-      date: new Date(2020, 1, 15),
-      type: 1,
-      isComplete: true,
+      email: "pedro@wintercr.com",
+      isBlocked: false,
+      isAdmin: true,
+      URLImage: "https://i.pinimg.com/originals/68/28/4c/68284c53b5f4d7d94cd40fa19c9fd21d.jpg"
     },
     {
       id: 2,
-      name: 'Luis Novelo',
-      date: new Date(2019, 1, 15),
-      type: 0,
-      isComplete: false,
+      name: 'Test',
+      email: "test@wintercr.com",
+      isBlocked: false,
+      isAdmin: false,
+      URLImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTP1z8odEN0zQOtOlL8wDp5lFcFqZpTBMCpCA&s"
     },
     {
       id: 3,
-      name: 'Joshua',
-      date: new Date(2024, 1, 15),
-      type: 1,
-      isComplete: false,
+      name: 'Luis Novelo',
+      email: "novelo@wintercr.com",
+      isBlocked: false,
+      isAdmin: false,
+      URLImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIwLjmr5uIJXFVZEVDi6FdkKuLB4AKh-TuNA&s"
     },
   ]
 };
@@ -49,11 +53,37 @@ export default function Admin() {
   const [data, setData] = useState(apiResponse);
 
   //Handles Delete Data
-  const handleRemove = (id) => {
+  const handleRemove = async (id) => {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Continue'
+    });
+    if (!result.isConfirmed) return
     setData(state => ({
       ...state,
       nodes: state.nodes.filter((node) => node.id !== id),
     }));
+  }
+
+  //Handles block
+  const handleBlock = (id) => {
+    const newData = { nodes: data.nodes.map(user => user.id === id ? {...user, isBlocked: !user.isBlocked}: user) }
+    setData(newData)
+  }
+
+  //Handles admin
+  const handleAdmin = async (id) => {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Continue'
+    });
+    if (!result.isConfirmed) return
+    const newData = { nodes: data.nodes.map(user => user.id === id ? {...user, isAdmin: !user.isAdmin}: user) }
+    setData(newData)
   }
 
   const theme = useTheme({
@@ -67,9 +97,11 @@ export default function Admin() {
     {},
     {
       sortFns: {
+        ID: (array) => array.sort((a, b) => a.id - b.id),
         NAME: (array) => array.sort((a, b) => a.name.localeCompare(b.name)),
-        DATE: (array) => array.sort((a, b) => a.date - b.date),
-        ISCOMPLETE: (array) => array.sort((a, b) => a.isComplete - b.isComplete),
+        EMAIL: (array) => array.sort((a, b) => a.email.localeCompare(b.email)),
+        STATUS: (array) => array.sort((a, b) => a.isBlocked - b.isBlocked),
+        ISADMIN: (array) => array.sort((a, b) => a.isAdmin - b.isAdmin)
       },
     }
   );
@@ -86,11 +118,11 @@ export default function Admin() {
             <>
               <Header>
                 <HeaderRow>
-                  <HeaderCell>Id</HeaderCell>
+                  <HeaderCellSort sortKey="ID">Id</HeaderCellSort>
                   <HeaderCellSort sortKey="NAME">Name</HeaderCellSort>
-                  <HeaderCellSort sortKey="DATE">Date</HeaderCellSort>
-                  <HeaderCell>Type</HeaderCell>
-                  <HeaderCellSort sortKey="ISCOMPLETE">Is Complete</HeaderCellSort>
+                  <HeaderCellSort sortKey="EMAIL">Email</HeaderCellSort>
+                  <HeaderCellSort sortKey="STATUS">Status</HeaderCellSort>
+                  <HeaderCellSort sortKey="ISADMIN">Is Admin</HeaderCellSort>
                   <HeaderCell>Actions</HeaderCell>
                 </HeaderRow>
               </Header>
@@ -100,13 +132,25 @@ export default function Admin() {
                   <Row item={item} key={item.id}>
                     <Cell>{item.id}</Cell>
                     <Cell>
-                      <img className="image-50" src="https://hagleysbeauty.com/wp-content/uploads/2023/03/test-button-1.jpg" />
+                      <img className="image-50" src={item.URLImage} />
                       {item.name}
                     </Cell>
-                    <Cell>{item.date.toString()}</Cell>
-                    <Cell>{item.type}</Cell>
+                    <Cell>{item.email}</Cell>
                     <Cell>
-                      <span className="badge text-bg-success">{item.isComplete.toString()}</span>
+                      {item.isBlocked === true && (
+                        <span className="badge text-bg-light">Blocked</span>
+                      )}
+                      {item.isBlocked === false && (
+                        <span className="badge text-bg-success">Active</span>
+                      )}
+                    </Cell>
+                    <Cell>
+                      {item.isAdmin === true && (
+                        <span className="badge text-bg-success">Yes</span>
+                      )}
+                      {item.isAdmin === false && (
+                        <span className="badge text-bg-light">No</span>
+                      )}
                     </Cell>
                     <Cell>
                       <div class="dropdown">
@@ -114,9 +158,9 @@ export default function Admin() {
                           Actions
                         </button>
                         <ul class="dropdown-menu">
-                          <li><button class="dropdown-item" onClick={() => handleRemove(item.id)}>Action</button></li>
-                          <li><button class="dropdown-item">Another action</button></li>
-                          <li><button class="dropdown-item">Something else here</button></li>
+                          <li><button class="dropdown-item" onClick={() => handleRemove(item.id)}>Delete</button></li>
+                          <li><button class="dropdown-item" onClick={() => handleBlock(item.id)}>{item.isBlocked ? "Unblock" : "Block"}</button></li>
+                          <li><button class="dropdown-item" onClick={() => handleAdmin(item.id)}>{item.isAdmin ? "Remove from admin" : "Add to admin"}</button></li>
                         </ul>
                       </div>
                     </Cell>

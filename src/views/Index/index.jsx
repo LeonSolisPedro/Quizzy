@@ -1,6 +1,5 @@
 import { Link, Outlet } from "react-router-dom";
 import Nav from "../../components/nav";
-import "./index.css"
 
 
 export default function Index() {

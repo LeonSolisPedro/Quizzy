@@ -16,30 +16,56 @@ import {
 } from "@table-library/react-table-library/sort";
 import { useTheme } from "@table-library/react-table-library/theme";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 
 const apiResponse = {
   nodes: [
     {
       id: 1,
-      name: 'Pedro León',
-      date: new Date(2020, 1, 15),
-      type: 1,
-      isComplete: true,
+      title: 'Quizz that you have to complete because you are an intern',
+      imageURL: 'https://s3.r29static.com/bin/entry/b1c/430x516,85/1558175/image.webp',
+      questions: [
+        {id: 1,title: "How many apples do you eat per day?", visibleAtTable: true},
+        {id: 2,title: "Can you describe a little bit more of yourself?", visibleAtTable: true},
+        {id: 3,title: "Do you think that love will every going to be unbreakable for the desire of careness around the world?", visibleAtTable: true},
+        {id: 4,title: "This question should not appear", visibleAtTable: false}
+      ],
+      userResponses: [
+        {id: 1},
+      ],
+      accessStatus: 0
     },
     {
       id: 2,
-      name: 'Luis Novelo',
-      date: new Date(2019, 1, 15),
-      type: 0,
-      isComplete: false,
+      title: 'Quizz to see if you love earth',
+      imageURL: 'https://ih1.redbubble.net/image.3805955023.2804/flat,750x,075,f-pad,750x1000,f8f8f8.jpg',
+      questions: [
+        {id: 1,title: "How many plants have you planted in the last year?", visibleAtTable: true},
+        {id: 2,title: "Do you believe that the planet is flat?", visibleAtTable: true},
+        {id: 3,title: "How many times per week do you use the car at the weekdays before the world tries to be at the dawn of love?", visibleAtTable: true},
+        {id: 4,title: "This question should not appear", visibleAtTable: false}
+      ],
+      userResponses: [
+
+      ],
+      accessStatus: 0
     },
     {
       id: 3,
-      name: 'Joshua',
-      date: new Date(2024, 1, 15),
-      type: 1,
-      isComplete: false,
+      title: 'Job interview quizz',
+      imageURL: 'https://blog.ivyexec.com/wp-content/uploads/2021/08/shutterstock_1702875067.jpg',
+      questions: [
+        {id: 1,title: "What are your greatest strengths?", visibleAtTable: true},
+        {id: 2,title: "What do you know about our company?", visibleAtTable: true},
+        {id: 3,title: "Do you think that love will every going to be unbreakable for the desire of careness around the world?", visibleAtTable: false},
+        {id: 4,title: "How do you handle criticism?", visibleAtTable: true},
+        {id: 4,title: "Can you describe a time you worked as part of a team?", visibleAtTable: true}
+      ],
+      userResponses: [
+        {id: 1}
+      ],
+      accessStatus: 1
     },
   ]
 };
@@ -49,7 +75,14 @@ export default function Index() {
   const [data, setData] = useState(apiResponse);
 
   //Handles Delete Data
-  const handleRemove = (id) => {
+  const handleRemove = async (id) => {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Continue'
+    });
+    if (!result.isConfirmed) return
     setData(state => ({
       ...state,
       nodes: state.nodes.filter((node) => node.id !== id),
@@ -67,9 +100,9 @@ export default function Index() {
     {},
     {
       sortFns: {
-        NAME: (array) => array.sort((a, b) => a.name.localeCompare(b.name)),
-        DATE: (array) => array.sort((a, b) => a.date - b.date),
-        ISCOMPLETE: (array) => array.sort((a, b) => a.isComplete - b.isComplete),
+        NAME: (array) => array.sort((a, b) => a.title.localeCompare(b.title)),
+        ANSWERS: (array) => array.sort((a, b) => a.userResponses.length - b.userResponses.length),
+        ACCESS: (array) => array.sort((a, b) => a.accessStatus - b.accessStatus),
       },
     }
   );
@@ -86,11 +119,11 @@ export default function Index() {
             <>
               <Header>
                 <HeaderRow>
-                  <HeaderCell>Id</HeaderCell>
+                  <HeaderCell>Image</HeaderCell>
                   <HeaderCellSort sortKey="NAME">Name</HeaderCellSort>
-                  <HeaderCellSort sortKey="DATE">Date</HeaderCellSort>
-                  <HeaderCell>Type</HeaderCell>
-                  <HeaderCellSort sortKey="ISCOMPLETE">Is Complete</HeaderCellSort>
+                  <HeaderCell>Questions</HeaderCell>
+                  <HeaderCellSort sortKey="ANSWERS">Answers</HeaderCellSort>
+                  <HeaderCellSort sortKey="ACCESS">Access</HeaderCellSort>
                   <HeaderCell>Actions</HeaderCell>
                 </HeaderRow>
               </Header>
@@ -98,15 +131,23 @@ export default function Index() {
               <Body>
                 {tableList.map((item) => (
                   <Row item={item} key={item.id}>
-                    <Cell>{item.id}</Cell>
                     <Cell>
-                      <img className="image-50" src="https://hagleysbeauty.com/wp-content/uploads/2023/03/test-button-1.jpg" />
-                      {item.name}
+                      <img className="image-50" src={item.imageURL} />
                     </Cell>
-                    <Cell>{item.date.toString()}</Cell>
-                    <Cell>{item.type}</Cell>
+                    <Cell>{item.title}</Cell>
                     <Cell>
-                      <span className="badge text-bg-success">{item.isComplete.toString()}</span>
+                      {item.questions.filter(x => x.visibleAtTable).slice(0, 3).map(question => (
+                        <p style={{ fontSize: "10.1px" }} className="webkit-line-2 mb-1">{question.title}</p>
+                      ))}
+                    </Cell>
+                    <Cell>{item.userResponses.length}</Cell>
+                    <Cell>
+                      {item.accessStatus === 0 && (
+                        <span className="badge text-bg-success">Public</span>
+                      )}
+                      {item.accessStatus === 1 && (
+                        <span className="badge text-bg-light">Private</span>
+                      )}
                     </Cell>
                     <Cell>
                       <div class="dropdown">
