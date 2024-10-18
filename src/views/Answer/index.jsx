@@ -112,7 +112,7 @@ export default function Index() {
                       <span className="badge text-bg-success">Done</span>
                     </Cell>
                     <Cell>
-                      <button className="btn btn-light btn-sm">View</button>
+                      <Link to={`${item.id}`} className="btn btn-light btn-sm">View</Link>
                     </Cell>
                   </Row>
                 ))}

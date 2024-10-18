@@ -11,6 +11,7 @@ import Result from "./views/Quizzes/result"
 import Comment from './views/Quizzes/comment'
 import Answer from "./views/Answer/index"
 import Admin from "./views/Admin/index"
+import AnswerDetail from './views/Answer/answerDetail';
 import "./axios"
 
 const router = createBrowserRouter([
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "/myanswers",
         element: <Answer />
+      },
+      {
+        path: "/myanswers/:userResponseId",
+        element: <AnswerDetail />
       },
       {
         path: "/admin",
