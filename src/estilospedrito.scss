@@ -288,5 +288,30 @@ textarea.formcontrolquestion-quizz {
 }
 
 
+.img-welcome {
+  width: 100%;
+  aspect-ratio: 16/10;
+  object-fit: cover;
+  pointer-events: none
+}
+
+.card-welcomegallery {
+  margin-right: 27px;
+  margin-left: 27px;
+}
+
+.title-welcome-1 {
+  margin-top: 37px;
+}
+
+.title-welcome-2 {
+  margin-bottom: 30px;
+}
+
+.title-welcome-3 {
+  margin-bottom: 34px;
+}
+
+
 
 @import "~bootstrap/scss/bootstrap";

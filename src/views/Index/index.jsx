@@ -18,7 +18,7 @@ export default function Index() {
                   </Link>
                 </li>
                 <li>
-                  <Link to={`/quizzes`} className="nav-link px-0 align-middle">
+                  <Link to={`/myquizzes`} className="nav-link px-0 align-middle">
                     <i className="fs-4 bi-table"></i> <span className="ms-1 d-none d-sm-inline">Quizzes</span>
                   </Link>
                 </li>
@@ -35,7 +35,7 @@ export default function Index() {
               </ul>
             </div>
           </div>
-          <div className="col p-5">
+          <div className="col-10 p-5" style={{backgroundColor: "#F8F9FA"}}>
             <Outlet />
           </div>
         </div>

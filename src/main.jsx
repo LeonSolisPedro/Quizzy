@@ -13,7 +13,8 @@ import Answer from "./views/Answer/index"
 import Admin from "./views/Admin/index"
 import AnswerDetail from './views/Answer/answerDetail';
 import ResultDetail from './views/Quizzes/resultDetail';
-import "./axios"
+import QuizzDetail from './views/Welcome/quizzDetail';
+import TagDetail from './views/Welcome/tagDetail';
 
 const router = createBrowserRouter([
   {
@@ -25,31 +26,39 @@ const router = createBrowserRouter([
         element: <Welcome />
       },
       {
-        path: "/quizzes",
+        path: "/quizz/:quizzId",
+        element: <QuizzDetail />
+      },
+      {
+        path: "/welcome/tag/:tagId",
+        element: <TagDetail />
+      },
+      {
+        path: "/myquizzes",
         element: <Quizzes />
       },
       {
-        path: "/quizzes/:quizzId",
+        path: "/myquizzes/:quizzId",
         element: <QuizzBuilder />,
         children: [
           {
-            path: "/quizzes/:quizzId",
+            path: "/myquizzes/:quizzId",
             element: <Setting />
           },
           {
-            path: "/quizzes/:quizzId/questions",
+            path: "/myquizzes/:quizzId/questions",
             element: <Question />
           },
           {
-            path: "/quizzes/:quizzId/results",
+            path: "/myquizzes/:quizzId/results",
             element: <Result />
           },
           {
-            path: "/quizzes/:quizzId/results/:userResponseId",
+            path: "/myquizzes/:quizzId/results/:userResponseId",
             element: <ResultDetail />
           },
           {
-            path: "/quizzes/:quizzId/comments",
+            path: "/myquizzes/:quizzId/comments",
             element: <Comment />
           }
         ]

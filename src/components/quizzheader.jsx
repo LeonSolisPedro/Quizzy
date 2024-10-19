@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 
 
 export default function QuizzHeader({quizzParam}) {
@@ -21,7 +22,7 @@ export default function QuizzHeader({quizzParam}) {
               <p className="mb-0">
                 <span className="me-2">Tags:</span>
                 {quizz.quizzTags.map(quizzTag => (
-                  <button className="btn btn-sm btn-light me-1 mb-1">{quizzTag.tag.name}</button>
+                  <Link to={`/welcome/tag/${quizzTag.tag.id}`} className="btn btn-sm btn-light me-1 mb-1">{quizzTag.tag.name}</Link>
                 ))}
               </p>
               <p>Topic: <span className="ms-2">{quizz.topic.name}</span></p>

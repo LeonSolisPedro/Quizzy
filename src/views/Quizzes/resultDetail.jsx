@@ -8,11 +8,11 @@ export default function ResultDetail() {
   const [userResponse, setUserResponse] = useState(userResponse1)
 
   useEffect(() => {
-    document.querySelector("#return").classList.add("d-none")
-    document.querySelector("#returnresults").classList.remove("d-none")
+    document.querySelector("#return")?.classList?.add("d-none")
+    document.querySelector("#returnresults")?.classList?.remove("d-none")
     return () => {
-      document.querySelector("#return").classList.remove("d-none")
-      document.querySelector("#returnresults").classList.add("d-none")
+      document.querySelector("#return")?.classList?.remove("d-none")
+      document.querySelector("#returnresults")?.classList?.add("d-none")
     };
   }, []);
 
