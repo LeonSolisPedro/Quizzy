@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 //This is mine
 import counterReducer from './counter'
 
+//Config
 const persistConfig = {
   key: "root",
   storage,
@@ -11,6 +12,7 @@ const persistConfig = {
 
 // This is mine
 const persistedReducer = persistReducer(persistConfig, counterReducer);
+
 export const store = configureStore({
   reducer: {
     counter: persistedReducer,

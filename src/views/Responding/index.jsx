@@ -1,14 +1,14 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { decrement, increment } from '../../store/counter'
+import { decrement, incrementAsync } from '../../store/counter'
 
-export default function Responsing(){
+export default function Responding(){
   const count = useSelector((state) => state.counter.value)
   const dispatch = useDispatch()
 
   return (
     <div>
       <div>
-        <button onClick={() => dispatch(increment())}>
+        <button onClick={() => dispatch(incrementAsync())}>
           Increment
         </button>
         <span>Responding view: {count}</span>

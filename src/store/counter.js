@@ -20,7 +20,12 @@ export const counterSlice = createSlice({
   },
 })
 
+// Thunk to handle API calls
+export const incrementAsync = () => async (dispatch) => {
+  await new Promise(r => setTimeout(r, 1000));
+  dispatch(increment());
+}
+
 // Action creators are generated for each case reducer function
 export const { increment, decrement, incrementByAmount } = counterSlice.actions
-
 export default counterSlice.reducer
