@@ -15,6 +15,9 @@ import AnswerDetail from './views/Answer/answerDetail';
 import ResultDetail from './views/Quizzes/resultDetail';
 import QuizzDetail from './views/Welcome/quizzDetail';
 import TagDetail from './views/Welcome/tagDetail';
+import Responsing from './views/Responsing';
+import { store } from './store'
+import { Provider } from 'react-redux'
 
 const router = createBrowserRouter([
   {
@@ -76,6 +79,10 @@ const router = createBrowserRouter([
         element: <Admin />
       },
     ]
+  },
+  {
+    path: "/responding/:quizzId",
+    element: <Responsing />
   }
 ]);
 
@@ -90,6 +97,8 @@ import "./sweetalert"
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>,
 )
