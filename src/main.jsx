@@ -95,6 +95,9 @@ import "bootstrap/js/src/modal"
 //Sweetalert
 import "./sweetalert"
 
+//Axios
+import "./axios"
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>

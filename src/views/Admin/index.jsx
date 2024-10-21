@@ -80,7 +80,7 @@ export default function Admin() {
   const saveUser = async () => {
     const form = document.querySelector('#form')
     if (!form.reportValidity()) return
-    let userImage = "https://i.ibb.co/JF1mnGH/58fc0df5e261.png"
+    let userImage = "https://i.ibb.co/NmMYhQN/i.jpg"
     if(image){
       const formData = new FormData();
       formData.append("image", imageBase64)

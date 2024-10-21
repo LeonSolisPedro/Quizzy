@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 //This is mine
-import counterReducer from './counter'
+import userSlice from "./user";
 
 //Config
 const persistConfig = {
@@ -11,11 +11,11 @@ const persistConfig = {
 };
 
 // This is mine
-const persistedReducer = persistReducer(persistConfig, counterReducer);
+const persistentUser = persistReducer(persistConfig, userSlice);
 
 export const store = configureStore({
   reducer: {
-    counter: persistedReducer,
+    user: persistentUser,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
