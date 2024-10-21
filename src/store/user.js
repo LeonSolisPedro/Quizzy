@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   isLogged: false,
+  id: 0,
   name: "",
   email: "",
   isAdmin: false,
@@ -16,6 +17,7 @@ export const userSlice = createSlice({
   reducers: {
     login: (state, action) => {
       state.isLogged = true
+      state.id = action.payload.id;
       state.name = action.payload.name;
       state.email = action.payload.email;
       state.isAdmin = action.payload.isAdmin;

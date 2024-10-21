@@ -2,10 +2,11 @@ import { faTrash, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useMemo, useRef, useState } from "react"
 import Swal from "sweetalert2";
+import { useSelector } from 'react-redux'
 
 export default function QuestionsToDisplay({ quizzParam, onQuizzChange, onDeleted, editable = false, editAnswers = false }) {
   const [quizz, setQuizz] = useState(quizzParam)
-  const yourUserId = 1;
+  const yourUserId = useSelector((state) => state.user.id)
   const isAdminEditing = useMemo(() => yourUserId !== quizz.userId);
 
   //Sync from parent
