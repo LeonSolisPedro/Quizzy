@@ -162,7 +162,7 @@ export default function QuestionsToDisplay({ quizzParam, onQuizzChange, onDelete
 
           {editAnswers && (
             <div className="d-flex justify-content-end">
-              <button onClick={() => deleteAnswer(question.reactId, question.id)} className="btn btn-danger btn-sm"><FontAwesomeIcon icon={faTrashCan} /></button>
+              <button onClick={() => deleteAnswer(question.reactId, question.answer?.id ?? 0)} className="btn btn-danger btn-sm"><FontAwesomeIcon icon={faTrashCan} /></button>
             </div>
           )}
 
