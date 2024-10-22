@@ -14,7 +14,7 @@ import Admin from "./views/Admin/index"
 import AnswerDetail, {loader as loaderAnswerDetail } from './views/Answer/answerDetail';
 import ResultDetail from './views/Quizzes/resultDetail';
 import QuizzDetail, { loader as loaderQuizzDetail } from './views/Welcome/quizzDetail';
-import TagDetail from './views/Welcome/tagDetail';
+import TagDetail, {loader as loaderTagDetail} from './views/Welcome/tagDetail';
 import Responding, { loader as loaderResponding } from './views/Responding';
 import { store } from './store'
 import { Provider } from 'react-redux'
@@ -36,7 +36,8 @@ const router = createBrowserRouter([
       },
       {
         path: "/welcome/tag/:tagId",
-        element: <TagDetail />
+        element: <TagDetail />,
+        loader: loaderTagDetail
       },
       {
         path: "/myquizzes",
