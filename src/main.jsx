@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Index from "./views/Index/index"
-import Welcome from "./views/Welcome/index"
+import Welcome, {loader as loaderWelcome } from "./views/Welcome/index"
 import Quizzes from "./views/Quizzes/index"
 import QuizzBuilder from "./views/Quizzes/quizzBuilder"
 import Question from "./views/Quizzes/question"
@@ -26,7 +26,8 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Welcome />
+        element: <Welcome />,
+        loader: loaderWelcome
       },
       {
         path: "/quizz/:quizzId",

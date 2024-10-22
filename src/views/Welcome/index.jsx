@@ -18,6 +18,8 @@ import {
 } from "@table-library/react-table-library/sort";
 import { useTheme } from "@table-library/react-table-library/theme";
 import { useState } from "react";
+import axios from "axios";
+import { useLoaderData } from "react-router-dom";
 
 const responsive = {
   desktop: {
@@ -34,121 +36,20 @@ const responsive = {
   }
 };
 
-const apiResponse3 = {
-  nodes: [
-    {
-      id: 1,
-      name: "Tag 1"
-    },
-    {
-      id: 2,
-      name: "Tag 2"
-    }
-  ]
+export async function loader() {
+  const [response1, response2, response3] = await Promise.all([
+    axios.get("/api/welcome/getLatest"),
+    axios.get("/api/welcome/getPopular"),
+    axios.get("/api/welcome/getTags")
+  ])
+  return { response1: response1.data, response2: response2.data, response3: response3.data }
 }
-
-const apiResponse2 = {
-  nodes: [
-    {
-      id: 1,
-      title: 'Quizz that you have to complete because you are an intern',
-      imageURL: 'https://s3.r29static.com/bin/entry/b1c/430x516,85/1558175/image.webp',
-      user: {
-        name: "Pedro León"
-      }
-    },
-    {
-      id: 2,
-      title: 'Quizz to see if you love earth',
-      imageURL: 'https://ih1.redbubble.net/image.3805955023.2804/flat,750x,075,f-pad,750x1000,f8f8f8.jpg',
-      user: {
-        name: "Pedro León"
-      }
-    },
-    {
-      id: 3,
-      title: 'Job interview quizz',
-      imageURL: 'https://blog.ivyexec.com/wp-content/uploads/2021/08/shutterstock_1702875067.jpg',
-      user: {
-        name: "Pedro León"
-      }
-    },
-    {
-      id: 4,
-      title: 'Job interview quizz 2',
-      imageURL: 'https://www.livecareer.com/lcapp/uploads/2017/12/job-interview-tips.webp',
-      user: {
-        name: "Pedro León"
-      }
-    },
-  ]
-}
-
-const apiResponse = {
-  nodes: [
-    {
-      id: 1,
-      title: 'Quizz that you have to complete because you are an intern',
-      imageURL: 'https://s3.r29static.com/bin/entry/b1c/430x516,85/1558175/image.webp',
-      questions: [
-        { id: 1, title: "How many apples do you eat per day?", visibleAtTable: true },
-        { id: 2, title: "Can you describe a little bit more of yourself?", visibleAtTable: true },
-        { id: 3, title: "Do you think that love will every going to be unbreakable for the desire of careness around the world?", visibleAtTable: true },
-        { id: 4, title: "This question should not appear", visibleAtTable: false }
-      ],
-      userResponses: [
-        { id: 1 },
-      ],
-      likes: [],
-      accessStatus: 0
-    },
-    {
-      id: 2,
-      title: 'Quizz to see if you love earth',
-      imageURL: 'https://ih1.redbubble.net/image.3805955023.2804/flat,750x,075,f-pad,750x1000,f8f8f8.jpg',
-      questions: [
-        { id: 1, title: "How many plants have you planted in the last year?", visibleAtTable: true },
-        { id: 2, title: "Do you believe that the planet is flat?", visibleAtTable: true },
-        { id: 3, title: "How many times per week do you use the car at the weekdays before the world tries to be at the dawn of love?", visibleAtTable: true },
-        { id: 4, title: "This question should not appear", visibleAtTable: false }
-      ],
-      userResponses: [
-
-      ],
-      likes: [
-        { id: 0 }
-      ],
-      accessStatus: 0
-    },
-    {
-      id: 3,
-      title: 'Job interview quizz',
-      imageURL: 'https://blog.ivyexec.com/wp-content/uploads/2021/08/shutterstock_1702875067.jpg',
-      questions: [
-        { id: 1, title: "What are your greatest strengths?", visibleAtTable: true },
-        { id: 2, title: "What do you know about our company?", visibleAtTable: true },
-        { id: 3, title: "Do you think that love will every going to be unbreakable for the desire of careness around the world?", visibleAtTable: false },
-        { id: 4, title: "How do you handle criticism?", visibleAtTable: true },
-        { id: 4, title: "Can you describe a time you worked as part of a team?", visibleAtTable: true }
-      ],
-      userResponses: [
-        { id: 1 }
-      ],
-      likes: [
-        { id: 0 },
-        { id: 0 },
-        { id: 0 },
-      ],
-      accessStatus: 1
-    },
-  ]
-};
-
 
 export default function Index() {
-  const [data, setData] = useState(apiResponse);
-  const [topQuiz, setTopQuiz] = useState(apiResponse2);
-  const [tags, setTags] = useState(apiResponse3);
+  const loader = useLoaderData();
+  const [data, setData] = useState({ nodes: loader.response2 });
+  const [topQuiz, setTopQuiz] = useState(loader.response1);
+  const [tags, setTags] = useState(loader.response3);
 
   const theme = useTheme({
     Table: `
@@ -177,7 +78,7 @@ export default function Index() {
           <p className="text-center title-welcome-2">See our latest quizzes</p>
           <Carousel className="mx-5 title-welcome-3" responsive={responsive}>
 
-            {topQuiz.nodes.map(quizz => (
+            {topQuiz.map(quizz => (
               <div key={quizz.id} class="card card-welcomegallery h-100">
                 <img src={quizz.imageURL} class="card-img-top img-welcome" alt="..." />
                 <div class="card-body d-flex flex-column">
@@ -252,7 +153,7 @@ export default function Index() {
           <h2 className="card-title">Our Popular Tags</h2>
         </div>
         <div className="card-body text-center">
-          {tags.nodes.map(tag => (
+          {tags.map(tag => (
             <Link to={`welcome/tag/${tag.id}`} className="btn btn-sm btn-light me-1 mb-1">{tag.name}</Link>
           ))}
         </div>
