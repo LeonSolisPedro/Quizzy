@@ -10,8 +10,8 @@ import { useLoaderData } from "react-router-dom";
 
 export async function loader({params}) {
   const quizz = await axios.get(`api/welcome/getQuizz/${params.quizzId}`)
-  quizz.data.quizz.questions = quizz.data.quizz.questions.map(x => ({...x, reactId: uuidv4() }));
-  return quizz.data.quizz
+  quizz.data.questions = quizz.data.questions.map(x => ({...x, reactId: uuidv4() }));
+  return quizz.data
 }
 
 export default function AnswerDetail() {

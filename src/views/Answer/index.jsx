@@ -16,40 +16,19 @@ import {
 } from "@table-library/react-table-library/sort";
 import { useTheme } from "@table-library/react-table-library/theme";
 import { useState } from "react";
+import axios from "axios";
+import { useLoaderData } from "react-router-dom";
 
 
-const apiResponse = {
-  nodes: [
-    {
-      id: 1,
-      responseDate: Date.now(),
-      quizz: {
-        title: "Quizz that you have to complete because you are an intern",
-        imageURL: "https://s3.r29static.com/bin/entry/b1c/430x516,85/1558175/image.webp"
-      },
-    },
-    {
-      id: 2,
-      responseDate: Date.now(),
-      quizz: {
-        title: "Quizz to see if you love earth",
-        imageURL: "https://ih1.redbubble.net/image.3805955023.2804/flat,750x,075,f-pad,750x1000,f8f8f8.jpg"
-      },
-    },
-    {
-      id: 3,
-      responseDate: Date.now(),
-      quizz: {
-        title: "Job interview quizz",
-        imageURL: "https://blog.ivyexec.com/wp-content/uploads/2021/08/shutterstock_1702875067.jpg"
-      },
-    },
-  ]
-};
 
+export async function loader(){
+  const answers = await axios.get("/api/myanswers")
+  return answers.data
+}
 
 export default function Index() {
-  const [data, setData] = useState(apiResponse);
+  const loader = useLoaderData();
+  const [data, setData] = useState({nodes: loader});
 
   //Format the date
   const formatDate = (utcDateString) => {

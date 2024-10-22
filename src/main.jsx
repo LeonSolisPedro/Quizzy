@@ -9,9 +9,9 @@ import Question from "./views/Quizzes/question"
 import Setting from "./views/Quizzes/setting"
 import Result from "./views/Quizzes/result"
 import Comment from './views/Quizzes/comment'
-import Answer from "./views/Answer/index"
+import Answer, {loader as loaderAnswer } from "./views/Answer/index"
 import Admin from "./views/Admin/index"
-import AnswerDetail from './views/Answer/answerDetail';
+import AnswerDetail, {loader as loaderAnswerDetail } from './views/Answer/answerDetail';
 import ResultDetail from './views/Quizzes/resultDetail';
 import QuizzDetail, { loader as loaderQuizzDetail } from './views/Welcome/quizzDetail';
 import TagDetail from './views/Welcome/tagDetail';
@@ -69,11 +69,13 @@ const router = createBrowserRouter([
       },
       {
         path: "/myanswers",
-        element: <Answer />
+        element: <Answer />,
+        loader: loaderAnswer
       },
       {
         path: "/myanswers/:userResponseId",
-        element: <AnswerDetail />
+        element: <AnswerDetail />,
+        loader: loaderAnswerDetail
       },
       {
         path: "/admin",
