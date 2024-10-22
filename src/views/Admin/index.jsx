@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import Modal from "bootstrap/js/src/modal"
 import {
   Table,
@@ -19,40 +19,18 @@ import { useTheme } from "@table-library/react-table-library/theme";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
+import Toast from "../../sweetalert";
 
 
-const apiResponse = {
-  nodes: [
-    {
-      id: 1,
-      name: 'Pedro León',
-      email: "pedro@wintercr.com",
-      isBlocked: false,
-      isAdmin: true,
-      URLImage: "https://i.pinimg.com/originals/68/28/4c/68284c53b5f4d7d94cd40fa19c9fd21d.jpg"
-    },
-    {
-      id: 2,
-      name: 'Test',
-      email: "test@wintercr.com",
-      isBlocked: false,
-      isAdmin: false,
-      URLImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTP1z8odEN0zQOtOlL8wDp5lFcFqZpTBMCpCA&s"
-    },
-    {
-      id: 3,
-      name: 'Luis Novelo',
-      email: "novelo@wintercr.com",
-      isBlocked: false,
-      isAdmin: false,
-      URLImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIwLjmr5uIJXFVZEVDi6FdkKuLB4AKh-TuNA&s"
-    },
-  ]
-};
+export async function loader() {
+  const users = await axios.get("/api/users")
+  return users.data
+}
 
 
 export default function Admin() {
-  const [data, setData] = useState(apiResponse);
+  const loader = useLoaderData();
+  const [data, setData] = useState({ nodes: loader });
 
   //Handles user creation stuff
   const [user, setUser] = useState({ id: 0, name: "", URLImage: "", email: "", password: "" })
@@ -78,28 +56,29 @@ export default function Admin() {
     reader.onerror = reject;
   });
   const saveUser = async () => {
-    const form = document.querySelector('#form')
-    if (!form.reportValidity()) return
-    let userImage = "https://i.ibb.co/NmMYhQN/i.jpg"
-    if(image){
-      const formData = new FormData();
-      formData.append("image", imageBase64)
-      const result = await axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGKEY}`, formData)
-      userImage = result.data.data.display_url
+    try {
+      const form = document.querySelector('#form')
+      if (!form.reportValidity()) return
+      let userImage = "https://i.ibb.co/NmMYhQN/i.jpg"
+      if (image) {
+        const formData = new FormData();
+        formData.append("image", imageBase64)
+        const prevAuthHeader = axios.defaults.headers.common['Authorization'];
+        delete axios.defaults.headers.common['Authorization'];
+        const result = await axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGKEY}`, formData);
+        userImage = result.data.data.display_url
+        axios.defaults.headers.common['Authorization'] = prevAuthHeader;
+      }
+      const response = await axios.post("/api/register", { ...user, URLImage: userImage })
+      const newData = { nodes: [...data.nodes, response.data.user] }
+      setData(newData)
+      resetUser()
+      const userModal = document.querySelector("#userModal");
+      const modal = Modal.getInstance(userModal)
+      modal.hide();
+    } catch (error) {
+      Toast.fire({ icon: "error", title: error?.response?.data?.message ?? "Error" })
     }
-    let newUser = {
-      ...user,
-      URLImage: userImage,
-      isBlocked: false,
-      isAdmin: false,
-      id: data.nodes.length + 1
-    }
-    const newData = {nodes: [...data.nodes, newUser]}
-    setData(newData)
-    resetUser()
-    const userModal = document.querySelector("#userModal");
-    const modal = Modal.getInstance(userModal)
-    modal.hide();
   }
   const resetUser = () => {
     setUser({ id: 0, name: "", URLImage: "", email: "", password: "" })
@@ -110,6 +89,26 @@ export default function Admin() {
 
   //Handles Delete Data
   const handleRemove = async (id) => {
+    try {
+      const result = await Swal.fire({
+        title: 'Are you sure?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Continue'
+      });
+      if (!result.isConfirmed) return
+      await axios.delete(`/api/users/${id}`)
+      setData(state => ({
+        ...state,
+        nodes: state.nodes.filter((node) => node.id !== id),
+      }));
+    } catch (error) {
+      Toast.fire({ icon: "error", title: error?.response?.data?.message ?? "Error" })
+    }
+  }
+
+  //Handles block
+  const handleBlock = async (id) => {
     const result = await Swal.fire({
       title: 'Are you sure?',
       icon: 'warning',
@@ -117,14 +116,7 @@ export default function Admin() {
       confirmButtonText: 'Continue'
     });
     if (!result.isConfirmed) return
-    setData(state => ({
-      ...state,
-      nodes: state.nodes.filter((node) => node.id !== id),
-    }));
-  }
-
-  //Handles block
-  const handleBlock = (id) => {
+    await axios.put(`/api/users/${id}/block`)
     const newData = { nodes: data.nodes.map(user => user.id === id ? { ...user, isBlocked: !user.isBlocked } : user) }
     setData(newData)
   }
@@ -138,6 +130,7 @@ export default function Admin() {
       confirmButtonText: 'Continue'
     });
     if (!result.isConfirmed) return
+    await axios.put(`/api/users/${id}/admin`)
     const newData = { nodes: data.nodes.map(user => user.id === id ? { ...user, isAdmin: !user.isAdmin } : user) }
     setData(newData)
   }

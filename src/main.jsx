@@ -10,7 +10,7 @@ import Setting from "./views/Quizzes/setting"
 import Result from "./views/Quizzes/result"
 import Comment from './views/Quizzes/comment'
 import Answer, {loader as loaderAnswer } from "./views/Answer/index"
-import Admin from "./views/Admin/index"
+import Admin, {loader as loaderAdmin} from "./views/Admin/index"
 import AnswerDetail, {loader as loaderAnswerDetail } from './views/Answer/answerDetail';
 import ResultDetail from './views/Quizzes/resultDetail';
 import QuizzDetail, { loader as loaderQuizzDetail } from './views/Welcome/quizzDetail';
@@ -81,7 +81,8 @@ const router = createBrowserRouter([
       },
       {
         path: "/admin",
-        element: <Admin />
+        element: <Admin />,
+        loader: loaderAdmin
       },
     ]
   },
