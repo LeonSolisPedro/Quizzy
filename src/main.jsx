@@ -5,14 +5,14 @@ import Index from "./views/Index/index"
 import Welcome, {loader as loaderWelcome } from "./views/Welcome/index"
 import Quizzes from "./views/Quizzes/index"
 import QuizzBuilder from "./views/Quizzes/quizzBuilder"
-import Question from "./views/Quizzes/question"
-import Setting from "./views/Quizzes/setting"
-import Result from "./views/Quizzes/result"
+import Question, {loader as loaderQuestion} from "./views/Quizzes/question"
+import Setting, {loader as loaderSetting} from "./views/Quizzes/setting"
+import Result, {loader as loaderResult} from "./views/Quizzes/result"
 import Comment from './views/Quizzes/comment'
 import Answer, {loader as loaderAnswer } from "./views/Answer/index"
 import Admin, {loader as loaderAdmin} from "./views/Admin/index"
 import AnswerDetail, {loader as loaderAnswerDetail } from './views/Answer/answerDetail';
-import ResultDetail from './views/Quizzes/resultDetail';
+import ResultDetail, {loader as loaderResultDetail } from './views/Quizzes/resultDetail';
 import QuizzDetail, { loader as loaderQuizzDetail } from './views/Welcome/quizzDetail';
 import TagDetail, {loader as loaderTagDetail} from './views/Welcome/tagDetail';
 import Responding, { loader as loaderResponding } from './views/Responding';
@@ -49,19 +49,23 @@ const router = createBrowserRouter([
         children: [
           {
             path: "/myquizzes/:quizzId",
-            element: <Setting />
+            element: <Setting />,
+            loader: loaderSetting
           },
           {
             path: "/myquizzes/:quizzId/questions",
-            element: <Question />
+            element: <Question />,
+            loader: loaderQuestion
           },
           {
             path: "/myquizzes/:quizzId/results",
-            element: <Result />
+            element: <Result />,
+            loader: loaderResult
           },
           {
             path: "/myquizzes/:quizzId/results/:userResponseId",
-            element: <ResultDetail />
+            element: <ResultDetail />,
+            loader: loaderResultDetail
           },
           {
             path: "/myquizzes/:quizzId/comments",

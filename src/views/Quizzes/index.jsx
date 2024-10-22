@@ -15,64 +15,29 @@ import {
   SortToggleType,
 } from "@table-library/react-table-library/sort";
 import { useTheme } from "@table-library/react-table-library/theme";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-
-
-const apiResponse = {
-  nodes: [
-    {
-      id: 1,
-      title: 'Quizz that you have to complete because you are an intern',
-      imageURL: 'https://s3.r29static.com/bin/entry/b1c/430x516,85/1558175/image.webp',
-      questions: [
-        {id: 1,title: "How many apples do you eat per day?", visibleAtTable: true},
-        {id: 2,title: "Can you describe a little bit more of yourself?", visibleAtTable: true},
-        {id: 3,title: "Do you think that love will every going to be unbreakable for the desire of careness around the world?", visibleAtTable: true},
-        {id: 4,title: "This question should not appear", visibleAtTable: false}
-      ],
-      userResponses: [
-        {id: 1},
-      ],
-      accessStatus: 0
-    },
-    {
-      id: 2,
-      title: 'Quizz to see if you love earth',
-      imageURL: 'https://ih1.redbubble.net/image.3805955023.2804/flat,750x,075,f-pad,750x1000,f8f8f8.jpg',
-      questions: [
-        {id: 1,title: "How many plants have you planted in the last year?", visibleAtTable: true},
-        {id: 2,title: "Do you believe that the planet is flat?", visibleAtTable: true},
-        {id: 3,title: "How many times per week do you use the car at the weekdays before the world tries to be at the dawn of love?", visibleAtTable: true},
-        {id: 4,title: "This question should not appear", visibleAtTable: false}
-      ],
-      userResponses: [
-
-      ],
-      accessStatus: 0
-    },
-    {
-      id: 3,
-      title: 'Job interview quizz',
-      imageURL: 'https://blog.ivyexec.com/wp-content/uploads/2021/08/shutterstock_1702875067.jpg',
-      questions: [
-        {id: 1,title: "What are your greatest strengths?", visibleAtTable: true},
-        {id: 2,title: "What do you know about our company?", visibleAtTable: true},
-        {id: 3,title: "Do you think that love will every going to be unbreakable for the desire of careness around the world?", visibleAtTable: false},
-        {id: 4,title: "How do you handle criticism?", visibleAtTable: true},
-        {id: 4,title: "Can you describe a time you worked as part of a team?", visibleAtTable: true}
-      ],
-      userResponses: [
-        {id: 1}
-      ],
-      accessStatus: 1
-    },
-  ]
-};
-
+import { useSelector, useDispatch } from "react-redux";
+import { toggleQuizzes } from "../../store/user"
+import axios from "axios";
 
 export default function Index() {
-  const [data, setData] = useState(apiResponse);
+  const [data, setData] = useState({nodes: []});
+  const dispatch = useDispatch()
+  const isAdmin = useSelector((state) => state.user.isAdmin)
+  const seeAllQuizzes = useSelector((state) => state.user.seeAllQuizzes)
+
+  //See all quizzes
+  //https://stackoverflow.com/a/53572588
+  useEffect(() => {
+    async function fetch() {
+      const url = seeAllQuizzes ? "/api/myquizzes/all" : "/api/myquizzes"
+      const response = await axios.get(url)
+      setData({nodes: response.data})
+    }
+    fetch()
+  },[seeAllQuizzes])
+
 
   //Handles Delete Data
   const handleRemove = async (id) => {
@@ -110,11 +75,16 @@ export default function Index() {
   return (
     <div class="card">
       <div class="card-header">
+        <div className="d-flex align-items-center">
           <h2 className="card-title">Your quizzes</h2>
-          <button className="btn btn-primary">Add Quizz</button>
+          {isAdmin && (
+            <p onClick={() => dispatch(toggleQuizzes())} className="mb-1 ms-2 seeallquizzes">{seeAllQuizzes ? '(Hide all quizzes)' : '(See all quizzes)'}</p>
+          )}
+        </div>
+        <button className="btn btn-primary">Add Quizz</button>
       </div>
       <div className="card-body">
-      <Table data={data} sort={sort} theme={theme} layout={{ custom: true, horizontalScroll: true }}>
+        <Table data={data} sort={sort} theme={theme} layout={{ custom: true, horizontalScroll: true }}>
           {(tableList) => (
             <>
               <Header>

@@ -20,20 +20,37 @@ import {
   SortToggleType,
 } from "@table-library/react-table-library/sort";
 import { useTheme } from "@table-library/react-table-library/theme";
+import axios from "axios";
+import { useLoaderData } from "react-router-dom";
+
+
+export async function loader({params}){
+  const quizz = await axios.get(`/api/myquizzes/${params.quizzId}/settings`)
+  return quizz.data
+}
 
 export default function Setting() {
+  const loader = useLoaderData();
 
+
+  //Title
+  const [title, setTitle] = useState(loader.quizz.title)
+
+  //HTML stuff
   const tiptapRef = useRef()
-  const [topics, setTopics] = useState([{ "id": 1, "name": "Education" }, { "id": 2, "name": "Quizz" }, { "id": 3, "name": "Other" }])
-  const [userTopic, setTopic] = useState(1);
+
+
+  //Topics
+  const [topics, setTopics] = useState(loader.topics)
+  const [userTopic, setTopic] = useState(loader.quizz.topicId);
 
 
   //Allow multiple answers
-  const [allowMA, setAllowMA] = useState(false);
+  const [allowMA, setAllowMA] = useState(loader.quizz.acceptMultipleAnswers);
 
 
   //Tags
-  const [selectedTags, setSelectedTags] = useState([{"id": 1,"name": "Tag1"},{"id": 2,"name": "Tag2"}]);
+  const [selectedTags, setSelectedTags] = useState(loader.quizz.quizzTags.map(x => x.tag));
   const [selectedTagLists, setSelectedTagLists] = useState([]);
   const search2 = async (event) => {
     await new Promise((r) => setTimeout(r, 1000));
@@ -42,11 +59,11 @@ export default function Setting() {
 
 
   //Searching and adding
-  const [Check, setCheck] = useState(true);
+  const [Check, setCheck] = useState(loader.quizz.accessStatus);
   const [selectedUser, setSelectedUser] = useState('');
   const [selectedUserLists, setSelectedUserLists] = useState([]);
   const [canAddUser, setCanAddUser] = useState(false)
-  const [userList, setUserList] = useState({ nodes: [{ id: 1, name: "Test", email: "test@wintercr.com" }] })
+  const [userList, setUserList] = useState({ nodes: loader.quizz.allowedUsers.map(x => x.user) })
   const search = async (event) => {
     await new Promise((r) => setTimeout(r, 1000));
     setSelectedUserLists([{ "id": 1, "name": "Pedro León", "email": "pedro@wintercr.com" }, { "id": 2, "name": "Diego Janus", "email": "diego@wintercr.com" }, { "id": 3, "name": "Jaime Alonso", "email": "jaime@wintercr.com" }]);
@@ -85,7 +102,7 @@ export default function Setting() {
   }
 
   //Image
-  const [image, setImage] = useState(null)
+  const [image, setImage] = useState(loader.quizz.imageURL)
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       setImage(URL.createObjectURL(event.target.files[0]));
@@ -96,11 +113,11 @@ export default function Setting() {
     <form>
       <div className="mb-3">
         <label className="form-label">Title</label>
-        <input type="email" className="form-control" value={"Quizz 1"} />
+        <input type="email" className="form-control" onChange={(e) => setTitle(e.target.value)} value={title} />
       </div>
       <div className="mb-3">
         <label className="form-label">Description</label>
-        <Tiptap ref={tiptapRef} content={"<p>Hello there</p>"} />
+        <Tiptap ref={tiptapRef} content={loader.quizz.description} />
       </div>
       <div className="mb-3">
         <label className="form-label">Image</label>

@@ -20,7 +20,7 @@ export default function QuizzReponseHeader({userResponseParam}){
       <div className="container-fluid card border-0 cardglobal-quizz p-4 shadow-none mb-5">
         <div className="row">
           <div className="col-xl-3 d-flex justify-content-center align-items-center">
-            <img className="globalimage-quizz rounded mb-4 mb-xl-0" src="https://i.pinimg.com/originals/68/28/4c/68284c53b5f4d7d94cd40fa19c9fd21d.jpg"></img>
+            <img className="globalimage-quizz rounded mb-4 mb-xl-0" src={userResponse.user.URLImage} ></img>
           </div>
           <div className="col-xl-9">
             <div className="mb-3">
@@ -30,7 +30,7 @@ export default function QuizzReponseHeader({userResponseParam}){
             <div>
               <p className="mb-2">Quizz: <span className="ms-2">{userResponse.quizz.title}</span></p>
               <p className="mb-2">Response Date: <span className="ms-2">{formatDate(userResponse.responseDate)}</span></p>
-              <p className="mb-2">Score: <span className="ms-2">{userResponse.score}</span></p>
+              <p className="mb-2">Score: <span className="ms-2">{userResponse.Score}</span></p>
             </div>
           </div>
         </div>

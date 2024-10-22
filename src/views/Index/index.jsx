@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 
 export default function Index() {
   const isLogged = useSelector((state) => state.user.isLogged)
+  const isAdmin = useSelector((state) => state.user.isAdmin)
 
   return (
     <div>
@@ -33,12 +34,14 @@ export default function Index() {
                         <i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">My answers</span>
                       </Link>
                     </li>
-                    <li>
-                      <Link to={`/admin`} className="nav-link px-0 align-middle">
-                        <i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">Admin</span>
-                      </Link>
-                    </li>
                   </>
+                )}
+                {isAdmin && (
+                  <li>
+                    <Link to={`/admin`} className="nav-link px-0 align-middle">
+                      <i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">Admin</span>
+                    </Link>
+                  </li>
                 )}
               </ul>
             </div>

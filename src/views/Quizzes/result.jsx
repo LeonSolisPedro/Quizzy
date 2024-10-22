@@ -18,47 +18,20 @@ import { useTheme } from "@table-library/react-table-library/theme";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import QuestionsToDisplay from "../../components/questionstodisplay"
+import { useLoaderData } from "react-router-dom";
 import { quizzFakeData5 } from "../../components/fakeQuizzData"
+import axios from "axios";
 
-const apiResponse = {
-  nodes: [
-    {
-      id: 1,
-      responseDate: Date.now(),
-      user: {
-        name: 'Pedro León',
-        email: "pedro@wintercr.com",
-        URLImage: "https://i.pinimg.com/originals/68/28/4c/68284c53b5f4d7d94cd40fa19c9fd21d.jpg"
-      },
-      score: 0
-    },
-    {
-      id: 2,
-      responseDate: Date.now(),
-      user: {
-        name: 'test',
-        email: "test@wintercr.com",
-        URLImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTP1z8odEN0zQOtOlL8wDp5lFcFqZpTBMCpCA&s"
-      },
-      score: 0
-    },
-    {
-      id: 3,
-      responseDate: Date.now(),
-      user: {
-        name: 'Luis Novelo',
-        email: "novelo@wintercr.com",
-        URLImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIwLjmr5uIJXFVZEVDi6FdkKuLB4AKh-TuNA&s"
-      },
-      score: 5
-    },
-  ]
-};
+export async function loader({params}){
+  const response = await axios.get(`/api/myquizzes/${params.quizzId}/results`)
+  return response.data;
+}
 
 export default function Result() {
+  const loader = useLoaderData();
   const [selectedOption, setSelectedOption] = useState("all");
   const [quizz, setQuizz] = useState(quizzFakeData5)
-  const [data, setData] = useState(apiResponse);
+  const [data, setData] = useState({nodes: loader});
 
   //Handles Delete Data
   const handleRemove = async (id) => {

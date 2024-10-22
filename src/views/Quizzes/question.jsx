@@ -1,10 +1,19 @@
 import { useMemo, useState } from "react"
-import { quizzFakeData2 } from "../../components/fakeQuizzData"
 import QuestionsToDisplay from "../../components/questionstodisplay"
 import { v4 as uuidv4 } from 'uuid';
+import axios from "axios";
+import { useLoaderData } from "react-router-dom";
+
+
+export async function loader({params}){
+  const quizz = await axios.get(`/api/myquizzes/${params.quizzId}/questions`)
+  quizz.data.questions = quizz.data.questions.map(x => ({...x, reactId: uuidv4() }));
+  return quizz.data;
+}
 
 export default function Question() {
-  const [quizz, setQuizz] = useState(quizzFakeData2)
+  const loader = useLoaderData();
+  const [quizz, setQuizz] = useState(loader)
   const length = useMemo(() => quizz.questions.length + 1);
 
   //Adds a new question

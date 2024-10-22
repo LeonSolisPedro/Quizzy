@@ -8,7 +8,8 @@ const initialState = {
   isAdmin: false,
   URLImage: "https://i.ibb.co/NmMYhQN/i.jpg",
   settingDarkMode: 0,
-  preferredLanguage: 0
+  preferredLanguage: 0,
+  seeAllQuizzes: false
 }
 
 export const userSlice = createSlice({
@@ -24,6 +25,9 @@ export const userSlice = createSlice({
       state.URLImage = action.payload.URLImage
       state.settingDarkMode = action.payload.settingDarkMode
       state.preferredLanguage = action.payload.preferredLanguage
+    },
+    toggleQuizzes: (state) => {
+      state.seeAllQuizzes = !state.seeAllQuizzes
     }
   },
 })
@@ -31,5 +35,5 @@ export const userSlice = createSlice({
 
 
 // Action creators are generated for each case reducer function
-export const { login } = userSlice.actions
+export const { login, toggleQuizzes } = userSlice.actions
 export default userSlice.reducer
