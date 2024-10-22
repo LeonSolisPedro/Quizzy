@@ -1,14 +1,22 @@
-import { Link } from "react-router-dom";
-import { quizzFakeData1 } from "../../components/fakeQuizzData"
 import QuizzHeader from "../../components/quizzheader"
 import QuestionsToDisplay from "../../components/questionstodisplay"
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { ScrollRestoration } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import axios from "axios";
+import { useLoaderData } from "react-router-dom";
 
+
+export async function loader({params}) {
+  const quizz = await axios.get(`api/welcome/getQuizz/${params.quizzId}`)
+  quizz.data.quizz.questions = quizz.data.quizz.questions.map(x => ({...x, reactId: uuidv4() }));
+  return quizz.data.quizz
+}
 
 export default function AnswerDetail() {
-  const [quizz, setQuizz] = useState(quizzFakeData1)
+  const loader = useLoaderData();
+  const [quizz, setQuizz] = useState(loader);
   const navigate = useNavigate();
 
 

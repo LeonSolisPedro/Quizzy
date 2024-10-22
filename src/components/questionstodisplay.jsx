@@ -4,10 +4,13 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import Swal from "sweetalert2";
 import { useSelector } from 'react-redux'
 
-export default function QuestionsToDisplay({ quizzParam, onQuizzChange, onDeleted, editable = false, editAnswers = false }) {
+export default function QuestionsToDisplay({ quizzParam, onQuizzChange, onDeleted, editable = false, editAnswers = false, respondingView = false }) {
   const [quizz, setQuizz] = useState(quizzParam)
   const yourUserId = useSelector((state) => state.user.id)
-  const isAdminEditing = useMemo(() => yourUserId !== quizz.userId);
+  const isAdminEditing = useMemo(() => {
+    if(respondingView) return false
+    return yourUserId !== quizz.userId
+  });
 
   //Sync from parent
   useEffect(() => {
@@ -66,14 +69,14 @@ export default function QuestionsToDisplay({ quizzParam, onQuizzChange, onDelete
 
   //Update answer
   const updateAnswer = (id, newAnswer) => {
-    const newQuizz = { ...quizz, questions: quizz.questions.map(question => question.reactId === id ? { ...question, answer: { ...question.answer, answer: newAnswer, lastEditedAdminId: isAdminEditing ? yourUserId : null } } : question) }
+    const newQuizz = { ...quizz, questions: quizz.questions.map(question => question.reactId === id ? { ...question, answer: { ...question.answer, answer: newAnswer, answerCheckbox: false, questionId: question.id, lastEditedAdminId: isAdminEditing ? yourUserId : null } } : question) }
     setQuizz(newQuizz)
     if (onQuizzChange) onQuizzChange(newQuizz)
   }
 
   //Update Check
   const updateCheck = (id, newAnswer) => {
-    const newQuizz = { ...quizz, questions: quizz.questions.map(question => question.reactId === id ? { ...question, answer: { ...question.answer, answerCheckbox: newAnswer, lastEditedAdminId: isAdminEditing ? yourUserId : null } } : question) }
+    const newQuizz = { ...quizz, questions: quizz.questions.map(question => question.reactId === id ? { ...question, answer: { ...question.answer, answer: "", answerCheckbox: newAnswer, questionId: question.id, lastEditedAdminId: isAdminEditing ? yourUserId : null } } : question) }
     setQuizz(newQuizz)
     if (onQuizzChange) onQuizzChange(newQuizz)
   }
@@ -126,27 +129,27 @@ export default function QuestionsToDisplay({ quizzParam, onQuizzChange, onDelete
           )}
 
           {question.typeOfQuestion === 0 && (
-            <input type="text" className="form-control formcontrolquestion-quizz" disabled={!editAnswers} value={question?.answer?.answer ?? ""} onChange={e => updateAnswer(question.reactId, e.target.value)} />
+            <input type="text" className="form-control formcontrolquestion-quizz" disabled={!editAnswers} value={question?.answer?.answer ?? ""} onChange={e => updateAnswer(question.reactId, e.target.value)} required={respondingView} />
           )}
 
           {question.typeOfQuestion === 1 && (
-            <textarea className="form-control formcontrolquestion-quizz" disabled={!editAnswers} value={question?.answer?.answer ?? ""} onChange={e => updateAnswer(question.reactId, e.target.value)}></textarea>
+            <textarea className="form-control formcontrolquestion-quizz" disabled={!editAnswers} value={question?.answer?.answer ?? ""} onChange={e => updateAnswer(question.reactId, e.target.value)} required={respondingView}></textarea>
           )}
 
           {question.typeOfQuestion === 2 && (
-            <input type="number" className="form-control formcontrolquestion-quizz" disabled={!editAnswers} value={question?.answer?.answer ?? ""} onChange={e => updateAnswer(question.reactId, e.target.value)} />
+            <input type="number" className="form-control formcontrolquestion-quizz" disabled={!editAnswers} value={question?.answer?.answer ?? ""} onChange={e => updateAnswer(question.reactId, e.target.value)} required={respondingView} />
           )}
 
           {question.typeOfQuestion === 3 && (
             <div className="topic-settings-pedro">
               <div className="form-check">
-                <input className="form-check-input" type="radio" disabled={!editAnswers} checked={question?.answer?.answerCheckbox === true} onChange={e => updateCheck(question.reactId, true)} />
+                <input className="form-check-input" type="radio" disabled={!editAnswers} checked={question?.answer?.answerCheckbox === true} onChange={e => updateCheck(question.reactId, true)} required={respondingView} />
                 <label className="form-check-label">
                   Yes
                 </label>
               </div>
               <div className="form-check">
-                <input className="form-check-input" type="radio" disabled={!editAnswers} checked={question?.answer?.answerCheckbox === false} onChange={e => updateCheck(question.reactId, false)} />
+                <input className="form-check-input" type="radio" disabled={!editAnswers} checked={question?.answer?.answerCheckbox === false} onChange={e => updateCheck(question.reactId, false)} required={respondingView} />
                 <label className="form-check-label">
                   No
                 </label>
@@ -160,7 +163,7 @@ export default function QuestionsToDisplay({ quizzParam, onQuizzChange, onDelete
             <p className="editedanswer-quizz webkit-line-2 mb-0"><small><i>(Edited by {question.answer.lastEditedAdmin.name})</i></small></p>
           )}
 
-          {editAnswers && (
+          {editAnswers && respondingView == false && (
             <div className="d-flex justify-content-end">
               <button onClick={() => deleteAnswer(question.reactId, question.answer?.id ?? 0)} className="btn btn-danger btn-sm"><FontAwesomeIcon icon={faTrashCan} /></button>
             </div>
