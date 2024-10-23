@@ -48,6 +48,7 @@ export default function Index() {
       confirmButtonText: 'Continue'
     });
     if (!result.isConfirmed) return
+    await axios.delete(`/api/myquizzes/${id}`)
     setData(state => ({
       ...state,
       nodes: state.nodes.filter((node) => node.id !== id),

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   Table,
   Header,
@@ -32,6 +32,7 @@ export default function Result() {
   const [selectedOption, setSelectedOption] = useState("all");
   const [quizz, setQuizz] = useState(quizzFakeData5)
   const [data, setData] = useState({nodes: loader});
+  const { quizzId } = useParams();
 
   //Handles Delete Data
   const handleRemove = async (id) => {
@@ -42,6 +43,7 @@ export default function Result() {
       confirmButtonText: 'Continue'
     });
     if (!result.isConfirmed) return
+    await axios.delete(`/api/myquizzes/${quizzId}/results/${id}`)
     setData(state => ({
       ...state,
       nodes: state.nodes.filter((node) => node.id !== id),

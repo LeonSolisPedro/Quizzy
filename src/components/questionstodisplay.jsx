@@ -7,10 +7,7 @@ import { useSelector } from 'react-redux'
 export default function QuestionsToDisplay({ quizzParam, onQuizzChange, onDeleted, editable = false, editAnswers = false, respondingView = false }) {
   const [quizz, setQuizz] = useState(quizzParam)
   const yourUserId = useSelector((state) => state.user.id)
-  const isAdminEditing = useMemo(() => {
-    if(respondingView) return false
-    return yourUserId !== quizz.userId
-  });
+  const isAdminEditing = false
 
   //Sync from parent
   useEffect(() => {
@@ -39,7 +36,14 @@ export default function QuestionsToDisplay({ quizzParam, onQuizzChange, onDelete
   }
 
   //Delete a question
-  const deleteQuestion = (id, realId) => {
+  const deleteQuestion = async (id, realId) => {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Continue'
+    });
+    if (!result.isConfirmed) return
     const newQuizz = { ...quizz, questions: quizz.questions.filter(question => question.reactId !== id) }
     for (const [i, quiz] of newQuizz.questions.entries()) newQuizz.questions.at(i).order = i + 1
     setQuizz(newQuizz)
