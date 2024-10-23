@@ -26,6 +26,12 @@ $card-cap-padding-y: 20px;
 $card-cap-padding-x: 34px;
 $card-spacer-x: 34px;
 $card-cap-bg: unset;
+$card-bg: white;
+$card-bg-dark: #15171C;
+$body-bg: #F9F9F9;
+$body-bg-dark: #0F1014;
+$input-bg: #F9FAFB;
+$input-bg-dark: #1B1E22;
 
 // Global
 .webkit-line-1 {
@@ -56,12 +62,21 @@ $card-cap-bg: unset;
   overflow: hidden;
 }
 
+
+[data-bs-theme="dark"] .form-control {
+  background-color: $input-bg-dark;
+}
+[data-bs-theme="dark"] .form-control:focus {
+  background-color: $input-bg-dark;
+}
+
 .card {
   box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.03);
   border-color: $border-color !important;
 }
 
 [data-bs-theme="dark"] .card {
+  background-color: $card-bg-dark;
   border-color: $border-color-dark !important;
 }
 
@@ -97,10 +112,12 @@ $card-cap-bg: unset;
 }
 
 .table> :not(caption)>*>* {
+  background-color: $card-bg !important;
   border-bottom: 1px dashed $border-color;
 }
 
 [data-bs-theme="dark"] .table> :not(caption)>*>* {
+  background-color: $card-bg-dark !important;
   border-bottom: 1px dashed $border-color-dark;
 }
 
@@ -244,9 +261,26 @@ textarea.formcontrolquestion-quizz {
 }
 
 .cardglobalquestion-quizz {
-  background-color: #F9FAFB !important;
+  background-color: $input-bg !important;
   position: relative;
 }
+[data-bs-theme="dark"] .cardglobalquestion-quizz {
+  background-color: $input-bg-dark !important;
+}
+.cardglobalquestion-quizz .form-control {
+  background-color: white !important;
+}
+[data-bs-theme="dark"] .cardglobalquestion-quizz .form-control {
+  background-color: $body-bg-dark !important;
+}
+
+.cardglobalquestion-quizz .form-control:disabled {
+  background-color: #EAECEF !important;
+}
+[data-bs-theme="dark"] .cardglobalquestion-quizz .form-control:disabled {
+  background-color: #343A40 !important;
+}
+
 
 .toolbarquestion-quizz {
   display: flex;

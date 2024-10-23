@@ -125,7 +125,6 @@ export default function Setting() {
 
   //Save
   const save = async () => {
-    debugger
     let userImage = image
     if (imageBase64) {
       const formData = new FormData();

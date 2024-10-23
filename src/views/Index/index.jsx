@@ -46,7 +46,7 @@ export default function Index() {
               </ul>
             </div>
           </div>
-          <div className="col-10 p-5" style={{ backgroundColor: "#F8F9FA" }}>
+          <div className="col-10 p-5">
             <Outlet />
           </div>
         </div>
