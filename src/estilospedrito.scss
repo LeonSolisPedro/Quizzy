@@ -5,6 +5,15 @@ $tbody-color: #252F4A;
 $tbody-color-dark: #B5B7C9;
 $thead-color: #98A1B7;
 $thead-color-dark: #646674;
+$quizzcolorindex: #F8FBFF;
+$quizzcolorindex-dark: #182331;
+$questioninputdisabled: #EAECEF;
+$questioninputdisabled-dark: #343A40;
+$modal-bg-dark: #15171C;
+$autocomplete: white;
+$autocomplete-dark: #212529;
+$pilltag-bg: #E0E1E1;
+$pilltag-bg-dark: #F8F9FA;
 
 //Bootstrap Variables
 $nav-link-color: $thead-color;
@@ -62,6 +71,10 @@ $input-bg-dark: #1B1E22;
   overflow: hidden;
 }
 
+
+[data-bs-theme="dark"] .modal-content {
+  background-color: $modal-bg-dark !important;
+}
 
 [data-bs-theme="dark"] .form-control {
   background-color: $input-bg-dark;
@@ -175,11 +188,15 @@ table tbody td {
 }
 
 .p-autocomplete-token {
-  background-color: #F8F9FA;
+  background-color: $pilltag-bg;
   margin-right: 5px;
   border-radius: 21px;
   padding-right: 10px;
   padding-left: 10px;
+}
+[data-bs-theme="dark"] .p-autocomplete-token {
+  background-color: $pilltag-bg-dark;
+  color: black;
 }
 
 .p-autocomplete-token-label {
@@ -200,7 +217,7 @@ table tbody td {
 .p-autocomplete:not(.p-autocomplete-multiple) input:focus,
 .p-autocomplete-multiple:focus-within {
   color: var(--bs-body-color);
-  background-color: var(--bs-body-bg);
+  background-color: $input-bg;
   border-color: rgb(134, 182.5, 254);
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
@@ -216,7 +233,7 @@ table tbody td {
   line-height: 1.5;
   color: var(--bs-body-color);
   appearance: none;
-  background-color: var(--bs-body-bg);
+  background-color: $input-bg;
   background-clip: padding-box;
   border: var(--bs-border-width) solid var(--bs-border-color);
   border-radius: var(--bs-border-radius);
@@ -225,7 +242,7 @@ table tbody td {
 
 .p-autocomplete-items-wrapper {
   border-radius: var(--bs-border-radius) !important;
-  background-color: white;
+  background-color: $autocomplete;
   box-shadow: 0px 0px 50px 0px rgba(82, 63, 105, 0.15);
 }
 
@@ -234,8 +251,16 @@ table tbody td {
 }
 
 [data-bs-theme="dark"] .p-autocomplete-items-wrapper {
-  background-color: #212529;
+  background-color: $autocomplete-dark;
   box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.3)
+}
+[data-bs-theme="dark"] .p-autocomplete:not(.p-autocomplete-multiple) input:focus,
+[data-bs-theme="dark"] .p-autocomplete-multiple:focus-within {
+  background-color: $input-bg-dark;
+}
+[data-bs-theme="dark"] .p-autocomplete:not(.p-autocomplete-multiple) input,
+[data-bs-theme="dark"] .p-autocomplete-multiple {
+  background-color: $input-bg-dark;
 }
 
 // Quiz
@@ -248,11 +273,11 @@ table tbody td {
 }
 
 .cardglobal-quizz {
-  background-color: #F8FBFF !important;
+  background-color: $quizzcolorindex !important;
 }
 
 [data-bs-theme="dark"] .cardglobal-quizz {
-  background-color: #182331 !important;
+  background-color: $quizzcolorindex-dark !important;
 }
 
 textarea.formcontrolquestion-quizz {
@@ -275,10 +300,13 @@ textarea.formcontrolquestion-quizz {
 }
 
 .cardglobalquestion-quizz .form-control:disabled {
-  background-color: #EAECEF !important;
+  background-color: $questioninputdisabled !important;
 }
 [data-bs-theme="dark"] .cardglobalquestion-quizz .form-control:disabled {
-  background-color: #343A40 !important;
+  background-color: $questioninputdisabled-dark !important;
+}
+[data-bs-theme=dark] .form-select {
+  background-color: $input-bg-dark;
 }
 
 

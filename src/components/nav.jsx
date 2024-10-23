@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import image from "../assets/quizzy.png"
-import "./nav.css"
+import "./nav.scss"
 
 
 export default function Nav() {
