@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Table,
   Header,
@@ -24,6 +24,7 @@ import axios from "axios";
 export default function Index() {
   const [data, setData] = useState({nodes: []});
   const dispatch = useDispatch()
+  const navigate = useNavigate();
   const isAdmin = useSelector((state) => state.user.isAdmin)
   const seeAllQuizzes = useSelector((state) => state.user.seeAllQuizzes)
 
@@ -37,6 +38,13 @@ export default function Index() {
     }
     fetch()
   },[seeAllQuizzes])
+
+
+  //Handles creation
+  const handleCreate = async (id) => {
+    const response = await axios.post("/api/myquizzes/create")
+    navigate(`/myquizzes/${response.data.id}`)
+  }
 
 
   //Handles Delete Data
@@ -82,7 +90,7 @@ export default function Index() {
             <p onClick={() => dispatch(toggleQuizzes())} className="mb-1 ms-2 seeallquizzes">{seeAllQuizzes ? '(Hide all quizzes)' : '(See all quizzes)'}</p>
           )}
         </div>
-        <button className="btn btn-primary">Add Quizz</button>
+        <button onClick={handleCreate} className="btn btn-primary">Add Quizz</button>
       </div>
       <div className="card-body">
         <Table data={data} sort={sort} theme={theme} layout={{ custom: true, horizontalScroll: true }}>
