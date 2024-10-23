@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import image from "../assets/quizzy.png"
 
 
 export default function Nav() {
@@ -6,7 +7,10 @@ export default function Nav() {
   return (
     <nav className="navbar bg-body-tertiary">
       <div className="container-fluid">
-        <Link className="navbar-brand" to={`/`}>Logo</Link>
+        <a class="navbar-brand" href="#">
+          <img src={image} alt="Logo" width="45" height="45" class="d-inline-block align-text-top logo-navbar-pedrito" />
+          Quizzy
+        </a>
         <p data-bs-toggle="modal" data-bs-target="#userLoginModal">Hello there</p>
       </div>
     </nav>
