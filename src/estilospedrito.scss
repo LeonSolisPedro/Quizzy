@@ -79,6 +79,7 @@ $input-bg-dark: #1B1E22;
 [data-bs-theme="dark"] .form-control {
   background-color: $input-bg-dark;
 }
+
 [data-bs-theme="dark"] .form-control:focus {
   background-color: $input-bg-dark;
 }
@@ -194,6 +195,7 @@ table tbody td {
   padding-right: 10px;
   padding-left: 10px;
 }
+
 [data-bs-theme="dark"] .p-autocomplete-token {
   background-color: $pilltag-bg-dark;
   color: black;
@@ -254,10 +256,12 @@ table tbody td {
   background-color: $autocomplete-dark;
   box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.3)
 }
+
 [data-bs-theme="dark"] .p-autocomplete:not(.p-autocomplete-multiple) input:focus,
 [data-bs-theme="dark"] .p-autocomplete-multiple:focus-within {
   background-color: $input-bg-dark;
 }
+
 [data-bs-theme="dark"] .p-autocomplete:not(.p-autocomplete-multiple) input,
 [data-bs-theme="dark"] .p-autocomplete-multiple {
   background-color: $input-bg-dark;
@@ -289,12 +293,15 @@ textarea.formcontrolquestion-quizz {
   background-color: $input-bg !important;
   position: relative;
 }
+
 [data-bs-theme="dark"] .cardglobalquestion-quizz {
   background-color: $input-bg-dark !important;
 }
+
 .cardglobalquestion-quizz .form-control {
   background-color: white !important;
 }
+
 [data-bs-theme="dark"] .cardglobalquestion-quizz .form-control {
   background-color: $body-bg-dark !important;
 }
@@ -302,9 +309,11 @@ textarea.formcontrolquestion-quizz {
 .cardglobalquestion-quizz .form-control:disabled {
   background-color: $questioninputdisabled !important;
 }
+
 [data-bs-theme="dark"] .cardglobalquestion-quizz .form-control:disabled {
   background-color: $questioninputdisabled-dark !important;
 }
+
 [data-bs-theme=dark] .form-select {
   background-color: $input-bg-dark;
 }
@@ -417,6 +426,24 @@ span.logincolor {
 .seeallquizzes {
   font-size: 10px;
   cursor: pointer;
+}
+
+
+
+//Navigation
+@media (max-width: 991px) {
+  #awesome-nav {
+    top: 0;
+    left: 0;
+    height: 100%;
+    position: fixed !important;
+    transform: translateX(-100%);
+    z-index: 10000;
+    overflow-x: hidden;
+    transition: 0.5s;
+    width: 100%;
+    background-color: white;
+  }
 }
 
 
