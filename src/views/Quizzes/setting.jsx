@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { AutoComplete } from 'primereact/autocomplete';
 import Tiptap from "../../components/tiptap"
 import "./setting.css"
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faFloppyDisk, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Table,
@@ -21,7 +21,8 @@ import {
 } from "@table-library/react-table-library/sort";
 import { useTheme } from "@table-library/react-table-library/theme";
 import axios from "axios";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
+import Toast from "../../sweetalert";
 
 
 export async function loader({params}){
@@ -31,6 +32,7 @@ export async function loader({params}){
 
 export default function Setting() {
   const loader = useLoaderData();
+  const { quizzId } = useParams();
 
 
   //Title
@@ -107,6 +109,24 @@ export default function Setting() {
     if (event.target.files && event.target.files[0]) {
       setImage(URL.createObjectURL(event.target.files[0]));
     }
+  }
+
+
+  //Save
+  const save = async () => {
+    const quizz = {
+      id: loader.quizz.id,
+      title,
+      userId: loader.quizz.userId,
+      description: tiptapRef.current.getHTML(),
+      descriptionPlain: tiptapRef.current.getText(),
+      imageURL: image,
+      topicId: userTopic,
+      accessStatus: +Check,
+      acceptMultipleAnswers: allowMA,
+    }
+    await axios.post(`/api/myquizzes/${quizzId}/settings`, {quizz})
+    Toast.fire({ icon: "success", title: "Sucessfully saved" })
   }
 
   return (
@@ -224,7 +244,9 @@ export default function Setting() {
       </div>
 
 
-      <button type="submit" className="btn btn-primary">Save</button>
+      <div className="d-flex justify-content-center flex-wrap mb-2">
+        <button type="button" onClick={save} className="btn btn-primary me-2"><FontAwesomeIcon icon={faFloppyDisk} /> Save</button>
+      </div>
     </form>
   )
 }

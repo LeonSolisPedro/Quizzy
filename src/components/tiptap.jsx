@@ -16,13 +16,11 @@ const MenuBar = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
 
     getHTML() {
-      alert("Getting HTML");
-      console.log(editor.getHTML())
+      return editor.getHTML()
     },
 
     getText() {
-      alert("Getting Text");
-      console.log(editor.getText())
+      return editor.getText()
     }
 
   }));
@@ -192,11 +190,11 @@ export default forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
 
     getHTML() {
-      childRef.current.getHTML()
+      return childRef.current.getHTML()
     },
 
     getText() {
-      childRef.current.getText()
+      return childRef.current.getText()
     }
 
   }));
