@@ -247,7 +247,7 @@ export default function Admin() {
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Profile picture</label>
-                  <input type="file" onChange={onImageChange} className="form-control" />
+                  <input type="file" onChange={onImageChange} accept="image/png, image/jpeg" className="form-control" />
                 </div>
               </form>
             </div>

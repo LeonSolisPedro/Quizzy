@@ -25,7 +25,7 @@ import { useLoaderData, useParams } from "react-router-dom";
 import Toast from "../../sweetalert";
 
 
-export async function loader({params}){
+export async function loader({ params }) {
   const quizz = await axios.get(`/api/myquizzes/${params.quizzId}/settings`)
   return quizz.data
 }
@@ -105,27 +105,50 @@ export default function Setting() {
 
   //Image
   const [image, setImage] = useState(loader.quizz.imageURL)
-  const onImageChange = (event) => {
+  const [imageBase64, setImageBase64] = useState(null)
+  const onImageChange = async (event) => {
     if (event.target.files && event.target.files[0]) {
       setImage(URL.createObjectURL(event.target.files[0]));
+      setImageBase64(await toBase64(event.target.files[0]))
     }
   }
+  const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const base64String = reader.result.split(',')[1];
+      resolve(base64String);
+    };
+    reader.onerror = reject;
+  });
 
 
   //Save
   const save = async () => {
+    debugger
+    let userImage = image
+    if (imageBase64) {
+      const formData = new FormData();
+      formData.append("image", imageBase64)
+      const prevAuthHeader = axios.defaults.headers.common['Authorization'];
+      delete axios.defaults.headers.common['Authorization'];
+      const result = await axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGKEY}`, formData);
+      userImage = result.data.data.display_url
+      axios.defaults.headers.common['Authorization'] = prevAuthHeader;
+    }
+    setImageBase64(null)
     const quizz = {
       id: loader.quizz.id,
       title,
       userId: loader.quizz.userId,
       description: tiptapRef.current.getHTML(),
       descriptionPlain: tiptapRef.current.getText(),
-      imageURL: image,
+      imageURL: userImage,
       topicId: userTopic,
       accessStatus: +Check,
       acceptMultipleAnswers: allowMA,
     }
-    await axios.post(`/api/myquizzes/${quizzId}/settings`, {quizz})
+    await axios.post(`/api/myquizzes/${quizzId}/settings`, { quizz })
     Toast.fire({ icon: "success", title: "Sucessfully saved" })
   }
 
@@ -142,7 +165,7 @@ export default function Setting() {
       <div className="mb-3">
         <label className="form-label">Image</label>
         <div className="div-image-pedro-settings">
-          <input type="file" onChange={onImageChange} className="form-control" />
+          <input type="file" onChange={onImageChange} accept="image/png, image/jpeg" className="form-control" />
           <img className="image-pedro-settings rounded" alt="preview image" src={image} />
         </div>
       </div>
