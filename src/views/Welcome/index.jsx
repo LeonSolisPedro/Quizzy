@@ -76,7 +76,7 @@ export default function Index() {
         <div className="card-body">
           <h2 className="text-center title-welcome-1" style={{ fontWeight: 500, lineHeight: "2.25rem" }}>Welcome to Quizzy!</h2>
           <p className="text-center title-welcome-2">See our latest quizzes</p>
-          <Carousel className="mx-5 title-welcome-3" responsive={responsive}>
+          <Carousel className="mx-sm-5 title-welcome-3" responsive={responsive}>
 
             {topQuiz.map(quizz => (
               <div key={quizz.id} class="card card-welcomegallery h-100">

@@ -11,7 +11,7 @@ export default function Builder() {
       </div>
       <div className="card-body container">
         <div className="row">
-          <div className="col-2">
+          <div className="col-md-2 mb-3">
             <nav class="nav flex-column nav-quizzbuilder">
               <Link class="nav-link" to={``}>Settings</Link>
               <Link class="nav-link" to={`questions`}>Questions</Link>
@@ -19,7 +19,7 @@ export default function Builder() {
               <Link class="nav-link" to={`comments`}>Comments</Link>
             </nav>
           </div>
-          <div className="col-10">
+          <div className="col-md-10">
             <Outlet />
           </div>
         </div>

@@ -446,6 +446,13 @@ span.logincolor {
   }
 }
 
+@media (max-width: 418px) {
+  .card-welcomegallery {
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+}
+
 
 
 @import "~bootstrap/scss/bootstrap";

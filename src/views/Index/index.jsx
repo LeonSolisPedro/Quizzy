@@ -49,7 +49,7 @@ export default function Index() {
             </aside>
             
           </div>
-          <div className="col-lg-10 p-5">
+          <div className="col-lg-10 p-3 p-sm-5">
             <Outlet />
           </div>
         </div>
