@@ -14,6 +14,8 @@ $autocomplete: white;
 $autocomplete-dark: #212529;
 $pilltag-bg: #E0E1E1;
 $pilltag-bg-dark: #F8F9FA;
+$background-navbar: #202B46;
+$background-navbar-dark: #15171C;
 
 //Bootstrap Variables
 $nav-link-color: $thead-color;
@@ -442,18 +444,21 @@ span.logincolor {
     overflow-x: hidden;
     transition: 0.5s;
     width: 100%;
-    background-color: #00143D;
+    background-color: $background-navbar;
   }
   [data-bs-theme="dark"] #awesome-nav {
-    background-color: #15171C;
+    background-color: $background-navbar-dark;
   }
+}
+.active-nav {
+  transform: translateX(0%) !important;
 }
 
 .bg-awesome-nav {
-  background-color: #202B46;
+  background-color: $background-navbar;
 }
 [data-bs-theme="dark"] .bg-awesome-nav {
-  background-color: #15171C;
+  background-color: $background-navbar-dark;
 }
 
 @media (max-width: 418px) {
@@ -461,6 +466,20 @@ span.logincolor {
     margin-right: 0px;
     margin-left: 0px;
   }
+}
+
+#awesome-nav .nav-link {
+  color: #D6D6D6;
+  font-weight: 400;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+#awesome-nav .nav-link:hover {
+  color: white;
+}
+
+#awesome-nav .nav-link span {
+  font-size: 15px
 }
 
 

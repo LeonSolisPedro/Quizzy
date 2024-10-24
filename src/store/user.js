@@ -9,7 +9,8 @@ const initialState = {
   URLImage: "https://i.ibb.co/NmMYhQN/i.jpg",
   settingDarkMode: 0,
   preferredLanguage: 0,
-  seeAllQuizzes: false
+  seeAllQuizzes: false,
+  showNavBar: false,
 }
 
 export const userSlice = createSlice({
@@ -28,6 +29,10 @@ export const userSlice = createSlice({
     },
     toggleQuizzes: (state) => {
       state.seeAllQuizzes = !state.seeAllQuizzes
+    },
+    toggleNavBar: (state) => {
+      if(window.innerWidth <= 991)
+        state.showNavBar = !state.showNavBar
     }
   },
 })
@@ -35,5 +40,5 @@ export const userSlice = createSlice({
 
 
 // Action creators are generated for each case reducer function
-export const { login, toggleQuizzes } = userSlice.actions
+export const { login, toggleQuizzes, toggleNavBar } = userSlice.actions
 export default userSlice.reducer
