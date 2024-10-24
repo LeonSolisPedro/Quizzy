@@ -72,11 +72,13 @@ export default function Setting() {
   const [canAddUser, setCanAddUser] = useState(false)
   const [userList, setUserList] = useState({ nodes: loader.quizz.allowedUsers.map(x => x.user) })
   const search = async (event) => {
-    await new Promise((r) => setTimeout(r, 1000));
-    setSelectedUserLists([{ "id": 1, "name": "Pedro León", "email": "pedro@wintercr.com" }, { "id": 2, "name": "Diego Janus", "email": "diego@wintercr.com" }, { "id": 3, "name": "Jaime Alonso", "email": "jaime@wintercr.com" }]);
+    const response = await axios.post(`/api/myquizzes/${quizzId}/settings/findUser`, {query: event.query})
+    setSelectedUserLists(response.data);
   };
   const addUserToTable = () => {
     resetSearch()
+    //If user is already at the table then stop
+    if(userList.nodes.some(x => x.id === selectedUser.id)) return
     setUserList(state => ({
       ...state,
       nodes: state.nodes.concat(selectedUser)
@@ -152,7 +154,7 @@ export default function Setting() {
       accessStatus: +Check,
       acceptMultipleAnswers: allowMA,
     }
-    const response = await axios.post(`/api/myquizzes/${quizzId}/settings`, { quizz, tags: selectedTags })
+    const response = await axios.post(`/api/myquizzes/${quizzId}/settings`, { quizz, tags: selectedTags, users: userList.nodes })
     setSelectedTags(response.data.tags)
     Toast.fire({ icon: "success", title: "Sucessfully saved" })
   }
