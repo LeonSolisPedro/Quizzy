@@ -55,8 +55,13 @@ export default function Setting() {
   const [selectedTags, setSelectedTags] = useState(loader.quizz.quizzTags.map(x => x.tag));
   const [selectedTagLists, setSelectedTagLists] = useState([]);
   const search2 = async (event) => {
-    await new Promise((r) => setTimeout(r, 1000));
-    setSelectedTagLists([{ "id": 1, "name": "Tag1" }, { "id": 2, "name": "Tag2" }, { "id": 3, "name": "Tag3" }, { "id": 4, "name": "Tag4" }]);
+    const response = await axios.post(`/api/myquizzes/${quizzId}/settings/findTags`, {query: event.query})
+    //If any of the tags is exactly like this, do not allow creating new ones.
+    if(response.data.some(x => x.name === event.query)){
+    } else {
+      response.data.push({id: 0, name: `${event.query}`})
+    }
+    setSelectedTagLists(response.data);
   };
 
 
@@ -147,7 +152,8 @@ export default function Setting() {
       accessStatus: +Check,
       acceptMultipleAnswers: allowMA,
     }
-    await axios.post(`/api/myquizzes/${quizzId}/settings`, { quizz })
+    const response = await axios.post(`/api/myquizzes/${quizzId}/settings`, { quizz, tags: selectedTags })
+    setSelectedTags(response.data.tags)
     Toast.fire({ icon: "success", title: "Sucessfully saved" })
   }
 
