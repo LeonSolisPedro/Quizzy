@@ -482,6 +482,22 @@ span.logincolor {
   font-size: 15px
 }
 
+.cutehamburger{
+  display: none;
+}
+
+@media (max-width: 991px) {
+.cutehamburger{
+    height: 48px;
+    width: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 22px;
+}
+}
+
 
 
 @import "~bootstrap/scss/bootstrap";
