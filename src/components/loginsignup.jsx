@@ -16,12 +16,12 @@ export default function LoginSignup() {
   const [pageType, setPageType] = useState("login")
   useEffect(() => {
     if (isLogged == false) {
+      setPageType("login")
       const userModal = document.querySelector("#userLoginModal");
       const modal = Modal.getOrCreateInstance(userModal)
       modal.show();
-      setPageType("login")
     }
-  }, []);
+  }, [isLogged]);
 
 
   //Handles user creation form and login
@@ -76,6 +76,7 @@ export default function LoginSignup() {
       if (imageBase64) {
         const formData = new FormData();
         formData.append("image", imageBase64)
+        delete axios.defaults.headers.common['Authorization'];
         const result = await axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGKEY}`, formData)
         urlImage = result.data.data.display_url
       }

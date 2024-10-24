@@ -27,6 +27,16 @@ export const userSlice = createSlice({
       state.settingDarkMode = action.payload.settingDarkMode
       state.preferredLanguage = action.payload.preferredLanguage
     },
+    logout: (state) => {
+      state.isLogged = false
+      state.id = 0;
+      state.name = "";
+      state.email = "";
+      state.isAdmin = false;
+      state.URLImage = "https://i.ibb.co/NmMYhQN/i.jpg"
+      state.settingDarkMode = 0
+      state.preferredLanguage = 0
+    },
     toggleQuizzes: (state) => {
       state.seeAllQuizzes = !state.seeAllQuizzes
     },
@@ -40,5 +50,5 @@ export const userSlice = createSlice({
 
 
 // Action creators are generated for each case reducer function
-export const { login, toggleQuizzes, toggleNavBar } = userSlice.actions
+export const { login, toggleQuizzes, toggleNavBar, logout } = userSlice.actions
 export default userSlice.reducer
