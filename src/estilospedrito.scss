@@ -503,5 +503,14 @@ span.logincolor {
 }
 
 
+.floating-button {
+  position: fixed;
+  bottom: 31px;
+  right: 50%;
+  left: 50%;
+  width: 100%;
+}
+
+
 
 @import "~bootstrap/scss/bootstrap";

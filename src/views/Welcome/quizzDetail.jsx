@@ -1,11 +1,13 @@
 import QuizzHeader from "../../components/quizzheader"
 import QuestionsToDisplay from "../../components/questionstodisplay"
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ScrollRestoration } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import axios from "axios";
 import { useLoaderData } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 
 
 export async function loader({params}) {
@@ -34,6 +36,9 @@ export default function AnswerDetail() {
             <ScrollRestoration />
             <QuizzHeader quizzParam={quizz} />
             <QuestionsToDisplay quizzParam={quizz} />
+            <div className="floating-button">
+              <Link to={`/responding/${quizz.id}`} className="btn btn-primary"><FontAwesomeIcon icon={faPenToSquare} /> Answer now</Link>
+            </div>
           </div>
         </div>
       </div>
