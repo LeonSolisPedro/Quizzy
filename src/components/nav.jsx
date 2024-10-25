@@ -6,6 +6,8 @@ import "./nav.scss"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import { AutoComplete } from "primereact/autocomplete";
+import { useState } from "react";
 
 
 export default function Nav() {
@@ -22,6 +24,14 @@ export default function Nav() {
     navigate("/")
   }
 
+
+  //Suggestions
+  const [suggestionList, setSuggestionList] = useState([]);
+  const search = async (event) => {
+    await new Promise(r => setTimeout(r, 1000));
+    setSuggestionList([{id:1, name: "Results are here..."}])
+  };
+
   return (
     <nav className="navbar">
       <div className="container-fluid">
@@ -34,6 +44,15 @@ export default function Nav() {
             Quizzy
           </Link>
         </div>
+
+        <AutoComplete
+        field="name"
+        suggestions={suggestionList}
+        completeMethod={search}
+        className="awesomefinder"
+         />
+        
+
 
         <div class="dropstart pointer" data-bs-toggle="dropdown" >
           <img className="image-50" src={URLImage} />
