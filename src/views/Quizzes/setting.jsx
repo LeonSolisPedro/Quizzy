@@ -59,7 +59,7 @@ export default function Setting() {
     //If any of the tags is exactly like this, do not allow creating new ones.
     if(response.data.some(x => x.name === event.query)){
     } else {
-      response.data.push({id: 0, name: `${event.query}`})
+      response.data.push({id: null, name: `${event.query}`})
     }
     setSelectedTagLists(response.data);
   };

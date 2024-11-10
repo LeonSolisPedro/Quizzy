@@ -33,7 +33,7 @@ export default function Admin() {
   const [data, setData] = useState({ nodes: loader });
 
   //Handles user creation stuff
-  const [user, setUser] = useState({ id: 0, name: "", URLImage: "", email: "", password: "" })
+  const [user, setUser] = useState({ id: null, name: "", URLImage: "", email: "", password: "" })
   const [image, setImage] = useState(null)
   const [imageBase64, setImageBase64] = useState(null)
   const updateUser = (newProperty, value) => {
@@ -81,7 +81,7 @@ export default function Admin() {
     }
   }
   const resetUser = () => {
-    setUser({ id: 0, name: "", URLImage: "", email: "", password: "" })
+    setUser({ id: null, name: "", URLImage: "", email: "", password: "" })
     setImage(null)
     setImageBase64(null)
   }

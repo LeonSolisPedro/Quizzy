@@ -33,7 +33,7 @@ export default function LoginSignup() {
   }
   const resetForm = () => {
     setDisableForm(false)
-    setUser({ id: 0, name: "", URLImage: "", email: "", password: "" })
+    setUser({ id: null, name: "", URLImage: "", email: "", password: "" })
     setImage("https://i.ibb.co/NmMYhQN/i.jpg")
     setImageBase64(null)
   }

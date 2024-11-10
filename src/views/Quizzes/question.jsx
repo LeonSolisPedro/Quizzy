@@ -24,7 +24,7 @@ export default function Question() {
 
   //Adds a new question
   const addQuestion = (typeOfQuestion) => {
-    setQuizz(x => ({ ...x, questions: [...x.questions, { id: 0, quizzId: x.id, reactId: uuidv4(), typeOfQuestion, title: `New Question ${length}`, description: `Description ${length}`, visibleAtTable: false, lastEditedAdminId: null, lastEditedAdmin: null, answer: null, order: length }] }))
+    setQuizz(x => ({ ...x, questions: [...x.questions, { id: null, quizzId: x.id, reactId: uuidv4(), typeOfQuestion, title: `New Question ${length}`, description: `Description ${length}`, visibleAtTable: false, lastEditedAdminId: null, lastEditedAdmin: null, answer: null, order: length }] }))
   }
 
   //Handle deleted ids

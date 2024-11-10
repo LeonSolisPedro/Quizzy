@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   isLogged: false,
-  id: 0,
+  id: null,
   name: "",
   email: "",
   isAdmin: false,
